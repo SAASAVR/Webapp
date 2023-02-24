@@ -5,7 +5,7 @@ import './Header.css';
 import * as states from './States.js';
 
 function HeaderButton(props) {
-    var buttonClass = `Header-Button ${props.isActive ? 'Active-Button' : ''}`
+    const buttonClass = `Header-Button ${props.isActive ? 'Active-Button' : ''}`
     return (
         <div className={buttonClass} onClick={props.onClick}>
             <h3 className="Header-Button-Name">{props.name}</h3>
