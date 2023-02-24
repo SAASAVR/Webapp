@@ -7,6 +7,7 @@
     text-align: justify;
     align-items: baseline;
     padding: 1em;
+    padding-bottom: 0;
     margin-bottom: 2em;
     background-color: #f4f6ff;
     color: #000000;
@@ -25,6 +26,7 @@
 
 .Button-Row {
     display: flex;
+
 }
 
 .Header-Button {

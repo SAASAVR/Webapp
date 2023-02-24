@@ -1,19 +1,24 @@
 import React from 'react'
+
 import './Header.css';
+
+import * as states from './States.js';
 
 function HeaderButton(props) {
     return (
-        <div className="Header-Button">
+        <div className="Header-Button" onClick={props.onClick}>
             <h3>{props.name}</h3>
         </div>
     )
 }
 
 class Header extends React.Component {
-    renderButton(name) {
+    renderButton(tab) {
+        let buttonName = states.getAppTabsString(tab);
         return(
             <HeaderButton
-                name={name}
+                name={buttonName}
+                onClick={() => this.props.clickHandler(tab)}
             />
         );
     }
@@ -25,8 +30,8 @@ class Header extends React.Component {
                     <h1 className="Title">SAAS</h1>
                 </div>
                 <div className="Button-Row">
-                    {this.renderButton('Hardware')}
-                    {this.renderButton('Database')}
+                    {this.renderButton(states.AppTabs.Hardware)}
+                    {this.renderButton(states.AppTabs.Database)}
                 </div>
             </div>
         );
