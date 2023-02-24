@@ -22,15 +22,14 @@ class App extends React.Component{
   }
 
   render() {
-    let currentTabName = states.getAppTabsString(this.state.currentTab);
-    console.log(currentTabName);
 
     return (
       <div className="App">
         <Header 
+          activeTab={this.state.currentTab}
           clickHandler={tab => this.handleHeaderClick(tab)}
         />
-        <h1>{currentTabName}</h1>
+        <h1>{states.getAppTabsString(this.state.currentTab)}</h1>
       </div>
     );
   }

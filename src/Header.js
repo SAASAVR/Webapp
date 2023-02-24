@@ -5,19 +5,20 @@ import './Header.css';
 import * as states from './States.js';
 
 function HeaderButton(props) {
+    var buttonClass = `Header-Button ${props.isActive ? 'Active-Button' : ''}`
     return (
-        <div className="Header-Button" onClick={props.onClick}>
-            <h3>{props.name}</h3>
+        <div className={buttonClass} onClick={props.onClick}>
+            <h3 className="Header-Button-Name">{props.name}</h3>
         </div>
     )
 }
 
 class Header extends React.Component {
     renderButton(tab) {
-        let buttonName = states.getAppTabsString(tab);
         return(
             <HeaderButton
-                name={buttonName}
+                isActive={this.props.activeTab === tab ? true : false}
+                name={states.getAppTabsString(tab)}
                 onClick={() => this.props.clickHandler(tab)}
             />
         );
@@ -29,7 +30,7 @@ class Header extends React.Component {
                 <div className='TitleDiv'>
                     <h1 className="Title">SAAS</h1>
                 </div>
-                <div className="Button-Row">
+                <div className="Header-Button-Row">
                     {this.renderButton(states.AppTabs.Hardware)}
                     {this.renderButton(states.AppTabs.Database)}
                 </div>
