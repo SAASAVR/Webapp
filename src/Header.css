@@ -1,0 +1,37 @@
+.Header {
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    display: inline-block;
+    justify-content: left;
+    text-align: justify;
+    align-items: baseline;
+    padding: 1em;
+    margin-bottom: 2em;
+    background-color: #f4f6ff;
+    color: #000000;
+}
+
+.Title {
+    padding: 0em;
+    margin-top: 0em;
+}
+
+.TitleDiv {
+    width: 100%;
+    margin: 0em;
+    padding: 0em;
+}
+
+.Button-Row {
+    display: flex;
+}
+
+.Header-Button {
+    margin-left: 1em;
+    margin-right: 1em;
+    padding: 1em;
+    padding-top: 0em;
+    padding-bottom: 0em;
+    background-color: #b3bff6;
+}
