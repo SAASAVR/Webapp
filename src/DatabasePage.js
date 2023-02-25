@@ -1,5 +1,7 @@
 import React from "react"
 
+import './App.css'
+
 class DatabasePage extends React.Component {
     render() {
         return (

@@ -1,0 +1,20 @@
+.Hardware-Page {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 2em;
+}
+
+.Settings-Panel {
+    border-style: solid;
+    border-color: black;
+    width: 20%;
+    margin-right: 1em;
+}
+
+.Stream-Panel {
+    border-style: solid;
+    border-color:  black; 
+    margin-left: 1em;
+    width: 80%;
+}
