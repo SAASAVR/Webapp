@@ -1,14 +1,38 @@
 import logo from './logo.svg';
-import './App.css';
-import Header from './Header.js';
+import React from 'react';
 
-function App() {
-  return (
-    <div className="App">
-      <Header />
-      <h1>Hello World!</h1>
-    </div>
-  );
+import './App.css';
+
+import Header from './Header.js';
+import * as states from './States.js';
+
+class App extends React.Component{
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentTab: states.AppTabs.Hardware,
+    }
+  }
+
+  handleHeaderClick(tab) {
+    this.setState({
+      currentTab: tab
+    });
+  }
+
+  render() {
+
+    return (
+      <div className="App">
+        <Header 
+          activeTab={this.state.currentTab}
+          clickHandler={tab => this.handleHeaderClick(tab)}
+        />
+        <h1>{states.getAppTabsString(this.state.currentTab)}</h1>
+      </div>
+    );
+  }
 }
 
 export default App;
