@@ -32,13 +32,11 @@ class Header extends React.Component {
 
         return (
             <div className="Header">
-                <div className='TitleDiv'>
-                    <h1 className="Title">SAAS</h1>
-                </div>
                 <div className="Header-Button-Row">
                     {this.renderButton(states.AppTabs.Hardware)}
                     {this.renderButton(states.AppTabs.Database)}
                 </div>
+                <h1 className="Title">SAAS</h1>
             </div>
         );
     }

@@ -1,12 +1,14 @@
 .Header {
+    position: relative;
     box-sizing: border-box;
     width: 100%;
     height: auto;
-    display: inline-block;
-    justify-content: left;
+    display: flex;
+    justify-content: right;
     text-align: justify;
     align-items: baseline;
-    padding: 1em;
+    padding: 2em;
+    padding-top: 0em;
     padding-bottom: 0em;
     margin-bottom: 2em;
     background-color: #f4f6ff;
@@ -14,19 +16,18 @@
 }
 
 .Title {
+    text-align: center;
+    width: 0 auto;
     font-size: 45px;
     padding: 0em;
-    margin-top: 0em;
-    margin-bottom: 0.5em;
-}
-
-.TitleDiv {
-    width: 100%;
-    margin: 0em;
-    padding: 0em;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
 }
 
 .Header-Button-Row {
+    position: absolute;
+    bottom: 0;
+    left: 2em;
     display: flex;
     margin-bottom: 0em;
 }
