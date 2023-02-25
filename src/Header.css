@@ -29,18 +29,21 @@
 .Header-Button-Row {
     display: flex;
     margin-bottom: 0em;
-
 }
 
 .Header-Button {
+    display: flex;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     margin-left: 0em;
     margin-right: 1em;
     padding: 1em;
-    padding-top: 0em;
-    padding-bottom: 0em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
     background-color: #b3bff6;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
 }
 
 .Header-Button:hover {
@@ -52,7 +55,8 @@
     background-color: #6b7291;
 }
 
-.Header-Button-Name {
-    margin-block-end: 0.5em;
-    margin-block-start: 0.5em;
+.Header-Button-Name{
+    margin-left: 0.5em;
+    margin-block-end: 0em;
+    margin-block-start: 0em;
 }
