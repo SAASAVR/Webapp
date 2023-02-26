@@ -3,8 +3,11 @@ import React from 'react';
 
 import './App.css';
 
+
 import Header from './Header.js';
 import * as states from './States.js';
+import HardwarePage from './HardwarePage';
+import DatabasePage from './DatabasePage';
 
 class App extends React.Component{
 
@@ -22,6 +25,17 @@ class App extends React.Component{
   }
 
   render() {
+    let curPage;
+    switch(this.state.currentTab) {
+      case states.AppTabs.Hardware:
+        curPage = <HardwarePage/>
+      break;
+      case states.AppTabs.Database:
+        curPage = <DatabasePage/>
+      break;
+      default:
+        curPage = <h1>PageNotFound</h1>
+    }
 
     return (
       <div className="App">
@@ -29,7 +43,7 @@ class App extends React.Component{
           activeTab={this.state.currentTab}
           clickHandler={tab => this.handleHeaderClick(tab)}
         />
-        <h1>{states.getAppTabsString(this.state.currentTab)}</h1>
+        {curPage}
       </div>
     );
   }
