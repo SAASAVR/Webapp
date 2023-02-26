@@ -19,7 +19,7 @@
 .Settings-Panel { 
     flex-direction: column;
     border-style: solid;
-    border-color: black;
+    border-color: white;
     width: 20%;
     margin-right: 1em;
 }
@@ -32,7 +32,7 @@
 
 .Stream-Panel {
     border-style: solid;
-    border-color:  black; 
+    border-color:  white; 
     margin-left: 1em;
     width: 80%;
 }
