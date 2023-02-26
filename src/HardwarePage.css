@@ -5,16 +5,47 @@
     padding: 2em;
 }
 
-.Settings-Panel {
-    border-style: solid;
-    border-color: black;
+.Hardware-Panel {
+    display: flex;
+    text-align: justify;
+    justify-content: left;
+    border-radius: 10px;
+    background-color: #383b45;
+}
+
+.Left-Side {
+    display: flex;
+    flex-direction: column;
     width: 20%;
     margin-right: 1em;
 }
 
-.Stream-Panel {
-    border-style: solid;
-    border-color:  black; 
-    margin-left: 1em;
+.Right-Side {
     width: 80%;
+    margin-left: 1em;
+}
+
+.Panel-Title {
+    width: 0 auto;
+    margin-left: 1em;
+}
+
+.Status-Panel { 
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
+.Settings-Panel { 
+    flex-direction: column;
+    margin-top: 1em;
+}
+
+.Settings-Option {
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 1em;
+}
+
+.Stream-Panel {
+    height: 1000px;
 }
