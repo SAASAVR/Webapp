@@ -1,4 +1,5 @@
 import React from "react"
+import ReactSelect from "react-select";
 import ReactSwitch from "react-switch";
 
 import './HardwarePage.css'
@@ -6,13 +7,54 @@ import './HardwarePage.css'
 import * as states from './States.js';
 
 class HardwarePage extends React.Component {
+
     renderSettingOption(setting) {
+        // Options for the interval and threshold settings
+        const IntervalOptions = [
+            {value: 0, label: 'No interval'},
+            {value: 30, label: '30 seconds'},
+            {value: 60, label: '1 minute'},
+            {value: 120, label: '2 minutes'},
+            {value: 300, label: '5 minutes'},
+            {value: 600, label: '10 minutes'},
+        ];
+
+        const ThreshOptions = [
+            {value: 0, label: 'I'},
+            {value: 10, label: 'do'},
+            {value: 20, label: 'not'},
+            {value: 30, label: 'know'},
+            {value: 40, label: 'what'},
+            {value: 50, label: 'options'},
+            {value: 60, label: 'should'},
+            {value: 70, label: 'be'},
+            {value: 80, label: 'here'},
+
+        ];
+
         let name = states.getHardwareOptionsString(setting);
         let setter;
-
         switch (setting) {
             case states.HardwareOptions.Interval:
-                setter = <div></div>
+                setter = <ReactSelect
+                            className="Setter Select"
+                            styles={{
+                                option: provided => ({
+                                    ...provided,
+                                    color: 'black'
+                                }),
+                                width: '100em'
+                            }}
+                            defaultValue={
+                                IntervalOptions.filter(
+                                    (opt) => opt.value === this.props.hardwareState.interval
+                                    )
+                                }
+                            options={IntervalOptions}
+                            onChange={(newVal) => this.props.onSettingsUpdate(
+                                setting, newVal.value
+                            )}>
+                        </ReactSelect>
             break;
             case states.HardwareOptions.SensorActivated:
                 setter = <ReactSwitch 
@@ -26,7 +68,24 @@ class HardwarePage extends React.Component {
                         </ReactSwitch>
             break;
             case states.HardwareOptions.Threshold:
-                setter = <div></div>
+                setter = <ReactSelect
+                            className="Setter Select"
+                            styles={{
+                                option: provided => ({
+                                    ...provided,
+                                    color: 'black'
+                                })
+                            }}
+                            defaultValue={
+                                ThreshOptions.filter(
+                                    (opt) => opt.value === this.props.hardwareState.threshold
+                                    )
+                                }
+                            options={ThreshOptions}
+                            onChange={(newVal) => this.props.onSettingsUpdate(
+                                setting, newVal.value
+                            )}>
+                        </ReactSelect>
             break;
             default:
                 setter = <div></div>
