@@ -17,6 +17,9 @@ class HardwarePage extends React.Component {
             case states.HardwareOptions.SensorActivated:
                 setter = <ReactSwitch 
                             className="Setter"
+                            onColor="#00c44e"
+                            checkedIcon={false}
+                            uncheckedIcon={false}
                             onChange={() => this.props.onSettingsUpdate(
                                 setting, !this.props.hardwareState.sensorAct)}
                             checked={this.props.hardwareState.sensorAct}>
