@@ -41,9 +41,12 @@
 }
 
 .Settings-Option {
+    position: relative;
     margin-left: 1em;
     margin-right: 1em;
-    margin-bottom: 1em;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
 }
 
 .Stream-Panel {

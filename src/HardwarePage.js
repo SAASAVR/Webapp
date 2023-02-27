@@ -1,8 +1,42 @@
 import React from "react"
+import ReactSwitch from "react-switch";
 
 import './HardwarePage.css'
 
+import * as states from './States.js';
+
 class HardwarePage extends React.Component {
+    renderSettingOption(setting) {
+        let name = states.getHardwareOptionsString(setting);
+        let setter;
+
+        switch (setting) {
+            case states.HardwareOptions.Interval:
+                setter = <div></div>
+            break;
+            case states.HardwareOptions.SensorActivated:
+                setter = <ReactSwitch 
+                            className="Setter"
+                            onChange={() => this.props.onSettingsUpdate(
+                                setting, !this.props.hardwareState.sensorAct)}
+                            checked={this.props.hardwareState.sensorAct}>
+                        </ReactSwitch>
+            break;
+            case states.HardwareOptions.Threshold:
+                setter = <div></div>
+            break;
+            default:
+                setter = <div></div>
+        };
+
+        return (
+            <div className="Settings-Option">
+                <p className="Settings-Name">{name}</p>
+                {setter}
+            </div>
+        )
+    }
+
     render() {
         return (
             <div className="Hardware-Page">
@@ -12,15 +46,9 @@ class HardwarePage extends React.Component {
                     </div>
                     <div className="Hardware-Panel Settings-Panel">
                         <h3 className="Panel-Title">Settings</h3>
-                        <div className="Settings-Option">
-                            <p>Interval</p>
-                        </div>
-                        <div className="Settings-Option">
-                            <p>Sensor-activated</p>
-                        </div>
-                        <div className="Settings-Option">
-                            <p>Threshold</p>
-                        </div>
+                        {this.renderSettingOption(states.HardwareOptions.Interval)}
+                        {this.renderSettingOption(states.HardwareOptions.SensorActivated)}
+                        {this.renderSettingOption(states.HardwareOptions.Threshold)}
                     </div>
                 </div>
                 <div className="Hardware-Panel Right-Side Stream-Panel">

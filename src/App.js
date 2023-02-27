@@ -15,9 +15,43 @@ class App extends React.Component{
     super(props);
     this.state = {
       currentTab: states.AppTabs.Hardware,
+      hardwareSet: {
+        interval: 0,
+        sensorAct: false,
+        threshold: 20,
+      },
     }
   }
 
+  // Function for handling changing hardware settings
+  handleHardwareChange(setting, option) {
+    switch (setting) {
+      case states.HardwareOptions.Interval:
+        this.setState({
+          hardwareSet: {
+            interval: option,
+          }
+        });
+      break;
+      case states.HardwareOptions.SensorActivated:
+        this.setState({
+          hardwareSet: {
+            sensorAct: option,
+          }
+        });
+      break;
+      case states.HardwareOptions.Threshold:
+        this.setState({
+          hardwareSet: {
+            threshold: option,
+          }
+        });
+      break;
+      default:
+    };
+  }
+
+  // Function for clicking tabs on header
   handleHeaderClick(tab) {
     this.setState({
       currentTab: tab
@@ -28,7 +62,10 @@ class App extends React.Component{
     let curPage;
     switch(this.state.currentTab) {
       case states.AppTabs.Hardware:
-        curPage = <HardwarePage/>
+        curPage = <HardwarePage 
+                    hardwareState={this.state.hardwareSet}
+                    onSettingsUpdate={(settings, option) => this.handleHardwareChange(settings, option)}
+                  />
       break;
       case states.AppTabs.Database:
         curPage = <DatabasePage/>

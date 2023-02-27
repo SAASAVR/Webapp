@@ -7,7 +7,6 @@ import * as states from './States.js';
 
 function HeaderButton(props) {
     const buttonClass = `Header-Button ${props.isActive ? 'Active-Button' : ''}`;
-    console.log(typeof `${props.icon}`)
     return (
         <div className={buttonClass} onClick={props.onClick}>
             <FontAwesomeIcon icon={props.icon} />
@@ -29,7 +28,6 @@ class Header extends React.Component {
     }
 
     render() {
-
         return (
             <div className="Header">
                 <div className="Header-Button-Row">
