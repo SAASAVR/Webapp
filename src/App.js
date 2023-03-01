@@ -19,6 +19,7 @@ class App extends React.Component{
         sensorAct: false,
         threshold: 20,
       },
+      hardwareStatus: states.HardwareStatus.NotConnected,
     }
   }
 
@@ -62,7 +63,8 @@ class App extends React.Component{
     switch(this.state.currentTab) {
       case states.AppTabs.Hardware:
         curPage = <HardwarePage 
-                    hardwareState={this.state.hardwareSet}
+                    hardwareSettings={this.state.hardwareSet}
+                    hardwareStatus={this.state.hardwareStatus}
                     onSettingsUpdate={(settings, option) => this.handleHardwareChange(settings, option)}
                   />
       break;

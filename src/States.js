@@ -13,6 +13,14 @@ const HardwareOptions = {
     Threshold: Symbol("threshold"),
 }
 
+const HardwareStatus = {
+    NotConnected: Symbol(0),
+    Connecting: Symbol(1),
+    Connected: Symbol(2),
+    Recording: Symbol(3),
+    Saving: Symbol(4),
+}
+
 function getAppTabsString(tab) {
     let name;
     switch (tab) {
@@ -61,4 +69,71 @@ function getHardwareOptionsString(opt) {
     return name;
 }
 
-export {AppTabs, HardwareOptions, getAppTabsString,  getAppTabsIcon, getHardwareOptionsString}
+function getHardwareStatusString(opt) {
+    let name;
+    switch (opt) {
+        case HardwareStatus.NotConnected:
+            name = "Not Connected"
+        break;
+        case HardwareStatus.Connecting:
+            name = "Connecting..."
+        break;
+        case HardwareStatus.Connected:
+            name = "Connected!"
+        break;
+        case HardwareStatus.Recording:
+            name = "Connected!"
+        break;
+        case HardwareStatus.Saving:
+            name = "Connected!"
+        break;
+        default:
+            name = "NotFound"
+    };
+    return name;
+}
+
+function getHardwareStatusIcon(opt) {
+    return solid("circle");
+}
+
+function getRecordingStatusString(opt) {
+    let name;
+    switch (opt) {
+        case HardwareStatus.NotConnected:
+            name = "Not Recording"
+        break;
+        case HardwareStatus.Connecting:
+            name = "Not Recording"
+        break;
+        case HardwareStatus.Connected:
+            name = "Ready to Record!"
+        break;
+        case HardwareStatus.Recording:
+            name = "Recording..."
+        break;
+        case HardwareStatus.Saving:
+            name = "Saving Recording..."
+        break;
+        default:
+            name = "NotFound"
+    }
+    return name;
+}
+
+function getRecordingStatusIcon(opt) {
+    return opt === HardwareStatus.Saving ? solid("circle-notch") : solid("circle");
+}
+
+export {
+    AppTabs, 
+    HardwareOptions, 
+    HardwareStatus,
+    getAppTabsString, 
+    getAppTabsIcon,
+    getHardwareOptionsString,
+    getHardwareStatusString,
+    getHardwareStatusIcon,
+    getRecordingStatusString,
+    getRecordingStatusIcon,
+}
