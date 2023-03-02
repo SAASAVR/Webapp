@@ -57,11 +57,15 @@
 
 .Active-Button {
     height: 2em;
-    color: #ffffff;
+    background-color: rgb(43, 45, 56);
 }
 
 .Header-Button-Name{
     margin-left: 0.5em;
     margin-block-end: 0em;
     margin-block-start: 0em;
+}
+
+.Setter {
+    margin-left: 0.5em;
 }
