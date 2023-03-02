@@ -1,0 +1,38 @@
+.Database-Page {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 2em;
+}
+
+.Left-Side {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    margin-right: 1em;
+}
+.List-Panel { 
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+.Right-Side {
+    width: 80%;
+    margin-left: 1em;
+}
+.Panel-Title {
+    width: 0 auto;
+    margin-left: 1em;
+}
+
+.Audio-Panel { 
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+.Database-Panel {
+    display: flex;
+    text-align: justify;
+    justify-content: left;
+    border-radius: 10px;
+    background-color: #383b45;
+}
+
