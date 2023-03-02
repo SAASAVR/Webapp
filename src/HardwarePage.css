@@ -49,6 +49,24 @@
     display: flex;
 }
 
+.Record-Button {
+    background-color: black;
+    width: 150px;
+    color: white;
+    font-size: 15px;
+    padding: 0.5em;
+    border-radius: 5px;
+    margin: 1em;
+    margin-top: 0em;
+    cursor: pointer;
+}
+
+.Record-Button:disabled {
+    color: grey;
+    opacity: 0.7;
+    cursor: default;
+}
+
 .Settings-Panel { 
     flex-direction: column;
     margin-top: 1em;

@@ -19,8 +19,16 @@ class App extends React.Component{
         sensorAct: false,
         threshold: 20,
       },
-      hardwareStatus: states.HardwareStatus.NotConnected,
+      hardwareStatus: states.HardwareStatus.Connected,
     }
+  }
+
+  // Function to handle recording -> connect to hardware
+  beginRecording() {
+    this.setState({
+      hardwareStatus: states.HardwareStatus.Recording
+    });
+    console.log("I will be recording now");
   }
 
   // Function for handling changing hardware settings
@@ -66,6 +74,7 @@ class App extends React.Component{
                     hardwareSettings={this.state.hardwareSet}
                     hardwareStatus={this.state.hardwareStatus}
                     onSettingsUpdate={(settings, option) => this.handleHardwareChange(settings, option)}
+                    recordHandler={() => this.beginRecording()}
                   />
       break;
       case states.AppTabs.Database:

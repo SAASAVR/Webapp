@@ -150,6 +150,19 @@ class HardwarePage extends React.Component {
                     <div className="Hardware-Panel Status-Panel">
                         <h3 className="Panel-Title">Status</h3>
                         {this.renderStatus(this.props.hardwareStatus)}
+                        {this.props.hardwareStatus === states.HardwareStatus.Connected ? 
+                            <button 
+                                className="Record-Button"
+                                onClick={this.props.recordHandler}>
+                                    Record
+                            </button> : 
+                            <button 
+                                className="Record-Button"
+                                disabled
+                                onClick={this.props.recordHandler}>
+                                    Record
+                            </button>
+                        }
                     </div>
                     <div className="Hardware-Panel Settings-Panel">
                         <h3 className="Panel-Title">Settings</h3>
