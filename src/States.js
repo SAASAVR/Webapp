@@ -124,6 +124,41 @@ function getRecordingStatusString(opt) {
 function getRecordingStatusIcon(opt) {
     return opt === HardwareStatus.Saving ? solid("circle-notch") : solid("circle");
 }
+const AudioTabs = {
+    AudioDescription: Symbol("AudioDescripiton"),
+    MLDescription: Symbol("MLDescription"),
+};
+
+
+function getAudioTabsString(tab) {
+    let name;
+    switch (tab) {
+        case AudioTabs.AudioDescription:
+            name = "Audio Description"
+        break;
+        case AudioTabs.MLDescription:
+            name = "ML Description"
+        break;
+        default:
+            name = "NotFound"
+    };
+    return name;
+}
+function getAudioTabsIcon(tab) {
+    let name;
+    switch (tab) {
+        case AudioTabs.AudioDescription:
+            name = solid("file-audio")
+        break;
+        case AudioTabs.MLDescription:
+            name = solid("diagram-project")
+        break;
+        default:
+            name = solid("xmark")
+    };
+    return name;
+}
+
 
 export {
     AppTabs, 
@@ -136,4 +171,7 @@ export {
     getHardwareStatusIcon,
     getRecordingStatusString,
     getRecordingStatusIcon,
+    AudioTabs,
+    getAudioTabsString,
+    getAudioTabsIcon,
 }
