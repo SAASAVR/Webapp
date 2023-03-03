@@ -5,12 +5,12 @@ import ReactSwitch from "react-switch";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import './DatabasePage.css'
-import './App.css'
-import * as states from './States.js';
+import '../../App.css'
+import * as states from './DatabaseStates.js';
 
 import { useState } from 'react';
-import MLDescriptionPage from './MLDescriptionPage';
-import AudioDescripitonPage from './AudioDescripitonPage';
+import MLDescriptionPage from './MLDescriptionPage/MLDescriptionPage';
+import AudioDescripitonPage from './AudioDescriptionPage/AudioDescripitonPage';
 
 const List = (props) => {
   let divClass = `Audio-Title ${props.active ? 'Active-Audio' : ''}`
@@ -77,6 +77,7 @@ class DatabasePage extends React.Component {
   }
 
   renderButton(tab) {
+    // Render to tabs
     return (
       <HeaderButton
         isActive={this.state.currentTab === tab ? true : false}
@@ -88,6 +89,7 @@ class DatabasePage extends React.Component {
   }
 
   audioClickHandler(audioIndex) {
+    // On click for audio index
     let newAudios = this.state.audios;
     newAudios[this.state.currentAudioIndex].isActive = false;
     newAudios[audioIndex].isActive = true;
@@ -99,6 +101,7 @@ class DatabasePage extends React.Component {
 
   render() {
     let curPage;
+    // list of tabs
     switch(this.state.currentTab) {
       case states.AudioTabs.AudioDescription:
         curPage = <AudioDescripitonPage
@@ -139,10 +142,11 @@ class DatabasePage extends React.Component {
 
 // We would grab audios here from the data
 function getAudios() {
+  // list of audio files, include isActive
   const audios = [
     {
       name: 'Audio 1',
-      isActive: false,
+      isActive: true,
     },
     {
       name: 'Audio 2',
