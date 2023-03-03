@@ -8,12 +8,14 @@ import './AudioDescripitonPage.css'
 import * as states from './States.js';
 
 class AudioDescripitonPage extends React.Component {
+
     render() {
+        let audioName = `${this.props.audio == null ? 'none' : this.props.audio.name}`;
         return(
             <div>
-                Hi2
+                Hi2 {audioName}
             </div>
-        )
+        );
     }
 }
 

@@ -20,37 +20,15 @@ const List = (props) => {
   );
 };
 
-function AudioList() {
-  const [audios, setAudio] = useState([
-    {
-      name: 'Audio 1',
-    },
-    {
-      name: 'Audio 2',
-    },
-    {
-      name: 'Audio 3',
-    },
-    {
-      name: 'Audio 4',
-    },
-    {
-      name: 'Audio 5',
-    },
-    {
-      name: 'Audio 6',
-    },
-    {
-      name: 'Audio 7',
-    },
-  ]);
+function AudioList(props) {
+  const [audios, setAudio] = useState(props.audios);
 
-  const handlechange = (index) => {
-    const newAudio = [...audios];
+  // const handlechange = (index) => {
+  //   const newAudio = [...audios];
 
-    newAudio[index].name = 'New Name';
-    setAudio(newAudio);
-  };
+  //   newAudio[index].name = 'New Name';
+  //   setAudio(newAudio);
+  // };
 
   return (
     <div>
@@ -58,7 +36,7 @@ function AudioList() {
         return (
           <div
             onClick={() => {
-              handlechange(index);
+              props.onClick(index);
             }}
             key={index}>
             <List key={index} name={Audio.name} />
@@ -84,6 +62,8 @@ class DatabasePage extends React.Component {
     super(props);
     this.state = {
       currentTab: states.AudioTabs.AudioDescription,
+      audios: getAudios(),
+      currentAudio: null
     }
     this.handleHeaderClick = this.handleHeaderClick.bind(this);
   }
@@ -105,39 +85,78 @@ class DatabasePage extends React.Component {
     );
   }
 
+  audioClickHandler(audioIndex) {
+    this.setState({
+      currentAudio: this.state.audios[audioIndex],
+    });
+  }
 
-    render() {
-      let curPage;
-      switch(this.state.currentTab) {
-        case states.AudioTabs.AudioDescription:
-          curPage = <AudioDescripitonPage></AudioDescripitonPage>
-        break;
-        case states.AudioTabs.MLDescription:
-          curPage = <MLDescriptionPage></MLDescriptionPage>
-        break;
-        default:
-          curPage = <h1>PageNotFound</h1>
-      }
-        return (
-            <div className="Database-Page">
-                <div className="Left-Side">
-                    <div className="Database-Panel List-Panel">
-                        <h3 className="Panel-Title">Audio List</h3>
-                        <AudioList/>
-                    </div>
-                </div>
-                <div className="Database-Panel Right-Side Audio-Panel">
-                    <div className="Header-Audio" >
-                      <div className="Header-Audio-Button-Row">
-                          {this.renderButton(states.AudioTabs.AudioDescription)}
-                          {this.renderButton(states.AudioTabs.MLDescription)}
-                      </div>
-                    </div>
-                    {curPage}
+  render() {
+    let curPage;
+    switch(this.state.currentTab) {
+      case states.AudioTabs.AudioDescription:
+        curPage = <AudioDescripitonPage
+                    audio={this.state.currentAudio}>
+                  </AudioDescripitonPage>
+      break;
+      case states.AudioTabs.MLDescription:
+        curPage = <MLDescriptionPage
+                    audio={this.state.currentAudio}>
+                  </MLDescriptionPage>
+      break;
+      default:
+        curPage = <h1>PageNotFound</h1>
+    }
+    return (
+        <div className="Database-Page">
+            <div className="Left-Side">
+                <div className="Database-Panel List-Panel">
+                    <h3 className="Panel-Title">Audio List</h3>
+                    <AudioList 
+                      audios={this.state.audios}
+                      onClick={(index) => this.audioClickHandler(index)}/>
                 </div>
             </div>
-        );
-    }
+            <div className="Database-Panel Right-Side Audio-Panel">
+                <div className="Header-Audio" >
+                  <div className="Header-Audio-Button-Row">
+                      {this.renderButton(states.AudioTabs.AudioDescription)}
+                      {this.renderButton(states.AudioTabs.MLDescription)}
+                  </div>
+                </div>
+                {curPage}
+            </div>
+        </div>
+    );
+  }
+}
+
+// We would grab audios here from the data
+function getAudios() {
+  const audios = [
+    {
+      name: 'Audio 1',
+    },
+    {
+      name: 'Audio 2',
+    },
+    {
+      name: 'Audio 3',
+    },
+    {
+      name: 'Audio 4',
+    },
+    {
+      name: 'Audio 5',
+    },
+    {
+      name: 'Audio 6',
+    },
+    {
+      name: 'Audio 7',
+    },
+  ];
+  return audios;
 }
 
 export default DatabasePage

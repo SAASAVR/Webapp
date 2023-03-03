@@ -9,11 +9,12 @@ import * as states from './States.js';
 
 class MLDescriptionPage extends React.Component {
     render() {
+        let audioName = `${this.props.audio == null ? 'none' : this.props.audio.name}`;
         return(
             <div>
-                Hi1
+                Hi1 {audioName}
             </div>
-        )
+        );
     }
 }
 
