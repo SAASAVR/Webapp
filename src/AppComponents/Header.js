@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import './Header.css';
 
-import * as states from './States.js';
+import * as states from './AppTabStates.js';
 
 function HeaderButton(props) {
     const buttonClass = `Header-Button ${props.isActive ? 'Active-Button' : ''}`;
@@ -16,6 +16,7 @@ function HeaderButton(props) {
 }
 
 class Header extends React.Component {
+    // tab
     renderButton(tab) {
         return(
             <HeaderButton

@@ -5,10 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import './HardwarePage.css'
 
-import * as states from './States.js';
+import * as states from './HardwareStates.js';
 
 class HardwarePage extends React.Component {
-
+    // Status of Hardware
     renderStatus(status) {
         let statusIcon = states.getHardwareStatusIcon(status);
         let recordIcon = states.getRecordingStatusIcon(status);
@@ -36,6 +36,11 @@ class HardwarePage extends React.Component {
                 statusIndicator = <FontAwesomeIcon icon={statusIcon} color="#00c44e"/>
                 recordIndicator = <FontAwesomeIcon icon={recordIcon} spin/>
             break;
+            default: // not connected
+                statusIndicator = <FontAwesomeIcon icon={statusIcon} color="gray"/>
+                recordIndicator = <FontAwesomeIcon icon={recordIcon} color="gray"/>
+            break;
+
         }
 
         return (

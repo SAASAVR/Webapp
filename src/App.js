@@ -3,10 +3,11 @@ import React from 'react';
 import './App.css';
 
 
-import Header from './Header.js';
-import * as states from './States.js';
-import HardwarePage from './HardwarePage';
-import DatabasePage from './DatabasePage';
+import Header from './AppComponents/Header.js';
+import * as states from './AppComponents/AppTabStates.js';
+import * as HWStates from './AppComponents/HardwarePage/HardwareStates.js';
+import HardwarePage from './AppComponents/HardwarePage/HardwarePage';
+import DatabasePage from './AppComponents/DatabasePage/DatabasePage';
 
 class App extends React.Component{
 
@@ -19,14 +20,14 @@ class App extends React.Component{
         sensorAct: false,
         threshold: 20,
       },
-      hardwareStatus: states.HardwareStatus.Connected,
+      hardwareStatus: HWStates.HardwareStatus.Connected,
     }
   }
 
   // Function to handle recording -> connect to hardware
   beginRecording() {
     this.setState({
-      hardwareStatus: states.HardwareStatus.Recording
+      hardwareStatus: HWStates.HardwareStatus.Recording
     });
     console.log("I will be recording now");
   }
@@ -34,21 +35,21 @@ class App extends React.Component{
   // Function for handling changing hardware settings
   handleHardwareChange(setting, option) {
     switch (setting) {
-      case states.HardwareOptions.Interval:
+      case HWStates.HardwareOptions.Interval:
         this.setState({
           hardwareSet: {
             interval: option,
           }
         });
       break;
-      case states.HardwareOptions.SensorActivated:
+      case HWStates.HardwareOptions.SensorActivated:
         this.setState({
           hardwareSet: {
             sensorAct: option,
           }
         });
       break;
-      case states.HardwareOptions.Threshold:
+      case HWStates.HardwareOptions.Threshold:
         this.setState({
           hardwareSet: {
             threshold: option,
