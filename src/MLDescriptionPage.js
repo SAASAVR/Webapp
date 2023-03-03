@@ -12,7 +12,7 @@ class MLDescriptionPage extends React.Component {
         let audioName = `${this.props.audio == null ? 'none' : this.props.audio.name}`;
         return(
             <div>
-                Hi1 {audioName}
+                MLDescription {audioName}
             </div>
         );
     }

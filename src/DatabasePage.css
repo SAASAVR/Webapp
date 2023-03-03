@@ -35,7 +35,17 @@
     display: 'flex';
     margin: '20px';
     cursor: 'pointer';
-  
+}
+
+.Active-Audio {
+    width: 0 auto;
+    background-color: black;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 1em;
+    display: 'flex';
+    margin: '20px';
+    cursor: 'pointer';
 }
 
 .Audio-Panel { 

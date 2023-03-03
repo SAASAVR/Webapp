@@ -13,9 +13,10 @@ import MLDescriptionPage from './MLDescriptionPage';
 import AudioDescripitonPage from './AudioDescripitonPage';
 
 const List = (props) => {
+  let divClass = `Audio-Title ${props.active ? 'Active-Audio' : ''}`
   return (
     <div>
-      <div className="Audio-Title">{props.name}</div>
+      <div className={divClass}>{props.name}</div>
     </div>
   );
 };
@@ -39,7 +40,7 @@ function AudioList(props) {
               props.onClick(index);
             }}
             key={index}>
-            <List key={index} name={Audio.name} />
+            <List active={Audio.isActive} key={index} name={Audio.name} />
           </div>
         );
       })}
@@ -63,7 +64,8 @@ class DatabasePage extends React.Component {
     this.state = {
       currentTab: states.AudioTabs.AudioDescription,
       audios: getAudios(),
-      currentAudio: null
+      
+      currentAudioIndex: 0
     }
     this.handleHeaderClick = this.handleHeaderClick.bind(this);
   }
@@ -86,8 +88,12 @@ class DatabasePage extends React.Component {
   }
 
   audioClickHandler(audioIndex) {
+    let newAudios = this.state.audios;
+    newAudios[this.state.currentAudioIndex].isActive = false;
+    newAudios[audioIndex].isActive = true;
     this.setState({
-      currentAudio: this.state.audios[audioIndex],
+      audios: newAudios,
+      currentAudioIndex: audioIndex
     });
   }
 
@@ -96,12 +102,12 @@ class DatabasePage extends React.Component {
     switch(this.state.currentTab) {
       case states.AudioTabs.AudioDescription:
         curPage = <AudioDescripitonPage
-                    audio={this.state.currentAudio}>
+                    audio={this.state.audios[this.state.currentAudioIndex]}>
                   </AudioDescripitonPage>
       break;
       case states.AudioTabs.MLDescription:
         curPage = <MLDescriptionPage
-                    audio={this.state.currentAudio}>
+                    audio={this.state.audios[this.state.currentAudioIndex]}>
                   </MLDescriptionPage>
       break;
       default:
@@ -136,24 +142,31 @@ function getAudios() {
   const audios = [
     {
       name: 'Audio 1',
+      isActive: false,
     },
     {
       name: 'Audio 2',
+      isActive: false,
     },
     {
       name: 'Audio 3',
+      isActive: false,
     },
     {
       name: 'Audio 4',
+      isActive: false,
     },
     {
       name: 'Audio 5',
+      isActive: false,
     },
     {
       name: 'Audio 6',
+      isActive: false,
     },
     {
       name: 'Audio 7',
+      isActive: false,
     },
   ];
   return audios;

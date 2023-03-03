@@ -13,7 +13,7 @@ class AudioDescripitonPage extends React.Component {
         let audioName = `${this.props.audio == null ? 'none' : this.props.audio.name}`;
         return(
             <div>
-                Hi2 {audioName}
+                Audio Description {audioName}
             </div>
         );
     }
