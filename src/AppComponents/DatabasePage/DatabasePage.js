@@ -1,14 +1,11 @@
 import React from "react"
-
-import ReactSelect from "react-select";
-import ReactSwitch from "react-switch";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import './DatabasePage.css'
 import '../../App.css'
 import * as states from './DatabaseStates.js';
 
-import { useState } from 'react';
+//// import { useState } from 'react';
 import MLDescriptionPage from './MLDescriptionPage/MLDescriptionPage';
 import AudioDescripitonPage from './AudioDescriptionPage/AudioDescripitonPage';
 
@@ -22,15 +19,8 @@ const List = (props) => {
 };
 
 function AudioList(props) {
-  const [audios, setAudio] = useState(props.audios);
-
-  // const handlechange = (index) => {
-  //   const newAudio = [...audios];
-
-  //   newAudio[index].name = 'New Name';
-  //   setAudio(newAudio);
-  // };
-
+  //// const [audios, setAudio] = useState(props.audios);
+  const audios = props.audios;
   return (
     <div>
       {audios.map((Audio, index) => {

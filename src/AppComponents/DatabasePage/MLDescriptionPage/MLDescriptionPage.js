@@ -1,11 +1,7 @@
 import React from "react"
-import ReactSelect from "react-select";
-import ReactSwitch from "react-switch";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
 import './MLDescriptionPage.css'
 
-import * as states from '../../AppTabStates.js';
+//// import * as states from '../../AppTabStates.js';
 
 class MLDescriptionPage extends React.Component {
     render() {
