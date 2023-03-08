@@ -20,32 +20,36 @@
     border-radius: 10px;
     background-color: #383b45;
 }
+
 .Right-Side {
     width: 80%;
     margin-left: 1em;
 }
+
 .Panel-Title {
     width: 0 auto;
     margin-left: 1em;
 }
+
 .Audio-Title {
-    width: 0 auto;
-    margin-left: 1em;
-    margin-bottom: 1em;
+    width: auto;
+    padding: 0.5em;
+    margin: 0.5em;
     display: 'flex';
-    margin: '20px';
-    cursor: 'pointer';
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Audio-Title:hover {
+    background-color: #626676;
 }
 
 .Active-Audio {
-    width: 0 auto;
-    background-color: black;
-    margin-left: 1em;
-    margin-right: 1em;
-    margin-bottom: 1em;
-    display: 'flex';
-    margin: '20px';
-    cursor: 'pointer';
+    background-color: #1b1c1e;
+}
+
+.Active-Audio:hover {
+    background-color: #1b1c1e;
 }
 
 .Audio-Panel { 
@@ -56,6 +60,7 @@
     border-radius: 10px;
     background-color: #383b45;
 }
+
 .Database-Panel {
     display: flex;
     text-align: justify;
@@ -84,7 +89,7 @@
 .Header-Audio-Button-Row {
     position: absolute;
     bottom: 0;
-    left: 2em;
+    left: 1em;
     display: flex;
     align-items: baseline;
     margin-bottom: 0em;
