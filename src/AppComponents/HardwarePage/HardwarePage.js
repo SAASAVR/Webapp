@@ -16,10 +16,6 @@ class HardwarePage extends React.Component {
         let recordIndicator;
 
         switch (status) {
-            case states.HardwareStatus.NotConnected:
-                statusIndicator = <FontAwesomeIcon icon={statusIcon} color="gray"/>
-                recordIndicator = <FontAwesomeIcon icon={recordIcon} color="gray"/>
-            break;
             case states.HardwareStatus.Connecting:
                 statusIndicator = <FontAwesomeIcon icon={statusIcon} fade color="#00c44e"/>
                 recordIndicator = <FontAwesomeIcon icon={recordIcon} color="gray"/>
@@ -87,13 +83,6 @@ class HardwarePage extends React.Component {
             case states.HardwareOptions.Interval:
                 setter = <ReactSelect
                             className="Setter Select"
-                            styles={{
-                                option: provided => ({
-                                    ...provided,
-                                    color: 'black'
-                                }),
-                                width: '100em'
-                            }}
                             defaultValue={
                                 IntervalOptions.filter(
                                     (opt) => opt.value === this.props.hardwareSettings.interval
@@ -102,7 +91,39 @@ class HardwarePage extends React.Component {
                             options={IntervalOptions}
                             onChange={(newVal) => this.props.onSettingsUpdate(
                                 setting, newVal.value
-                            )}>
+                            )}
+                            theme={(theme) => ({
+                                ...theme,
+                                colors: {
+                                ...theme.colors,
+                                  neutral0: '#1b1c1e',
+                                  neutral5: 'white',
+                                  neutral10: 'white',
+                                  neutral50: 'white',
+                                  neutral80: 'white',
+                                  primary25: '#383b45',
+                                  primary50: '#383b45',
+                                  primary: '#383b45',
+                                },
+                              })}
+                              styles={{
+                                control: (provided, state) => ({
+                                  ...provided,
+                                  boxShadow: "none",
+                                  border: "none"
+                                }),
+                                menu: (provided, state) => ({
+                                  ...provided,
+                                  border: "1px solid #1b1c1e",
+                                  backgroundColor: "#383b45",
+                                  boxShadow: "none"
+                                }),
+                                option: (provided, state) => ({
+                                   ...provided,
+                                   backgroundColor: state.isFocused && "#1b1c1e",
+                                   color: state.isFocused && "white"
+                                })
+                              }}>
                         </ReactSelect>
             break;
             case states.HardwareOptions.SensorActivated:
@@ -119,12 +140,6 @@ class HardwarePage extends React.Component {
             case states.HardwareOptions.Threshold:
                 setter = <ReactSelect
                             className="Setter Select"
-                            styles={{
-                                option: provided => ({
-                                    ...provided,
-                                    color: 'black'
-                                })
-                            }}
                             defaultValue={
                                 ThreshOptions.filter(
                                     (opt) => opt.value === this.props.hardwareSettings.threshold
@@ -133,7 +148,39 @@ class HardwarePage extends React.Component {
                             options={ThreshOptions}
                             onChange={(newVal) => this.props.onSettingsUpdate(
                                 setting, newVal.value
-                            )}>
+                            )}
+                            theme={(theme) => ({
+                                ...theme,
+                                colors: {
+                                ...theme.colors,
+                                  neutral0: '#1b1c1e',
+                                  neutral5: 'white',
+                                  neutral10: 'white',
+                                  neutral50: 'white',
+                                  neutral80: 'white',
+                                  primary25: '#383b45',
+                                  primary50: '#383b45',
+                                  primary: '#383b45',
+                                },
+                              })}
+                              styles={{
+                                control: (provided, state) => ({
+                                  ...provided,
+                                  boxShadow: "none",
+                                  border: "none"
+                                }),
+                                menu: (provided, state) => ({
+                                  ...provided,
+                                  border: "1px solid #1b1c1e",
+                                  backgroundColor: "#383b45",
+                                  boxShadow: "none"
+                                }),
+                                option: (provided, state) => ({
+                                   ...provided,
+                                   backgroundColor: state.isFocused && "#1b1c1e",
+                                   color: state.isFocused && "white"
+                                })
+                              }}>
                         </ReactSelect>
             break;
             default:
