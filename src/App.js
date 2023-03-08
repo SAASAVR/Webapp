@@ -24,12 +24,29 @@ class App extends React.Component{
     }
   }
 
-  // Function to handle recording -> connect to hardware
   beginRecording() {
     this.setState({
       hardwareStatus: HWStates.HardwareStatus.Recording
     });
     console.log("I will be recording now");
+  }
+
+  stopRecording() {
+    this.setState({
+      hardwareStatus: HWStates.HardwareStatus.Saving
+    });
+    console.log("I am not recording now");
+  }
+
+  // Function to handle recording -> connect to hardware
+  toggleRecording() {
+    let newStateFunc;
+    if (this.state.hardwareStatus === HWStates.HardwareStatus.Connected) {
+      newStateFunc = () => this.beginRecording();
+    } else {
+      newStateFunc = () => this.stopRecording();
+    }
+    newStateFunc.call();
   }
 
   // Function for handling changing hardware settings
@@ -75,7 +92,7 @@ class App extends React.Component{
                     hardwareSettings={this.state.hardwareSet}
                     hardwareStatus={this.state.hardwareStatus}
                     onSettingsUpdate={(settings, option) => this.handleHardwareChange(settings, option)}
-                    recordHandler={() => this.beginRecording()}
+                    recordHandler={() => this.toggleRecording()}
                   />
       break;
       case states.AppTabs.Database:

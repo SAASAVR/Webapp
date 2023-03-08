@@ -7,6 +7,35 @@ import './HardwarePage.css'
 
 import * as states from './HardwareStates.js';
 
+function RecordButton(state, handler) {
+    let button;
+
+    switch (state) {
+        case states.HardwareStatus.Connected:
+            button = <button 
+                        className="Record-Button"
+                        onClick={handler}>
+                            Record
+                    </button>;
+        break;
+        case states.HardwareStatus.Recording:
+            button = <button 
+                        className="Stop-Record-Button"
+                        onClick={handler}>
+                            Stop
+                    </button>;
+        break;
+        default: 
+            button = <button 
+                        className="Record-Button"
+                        disabled
+                        onClick={handler}>
+                            Record
+                    </button>
+    }
+    return button;
+}
+
 class HardwarePage extends React.Component {
     // Status of Hardware
     renderStatus(status) {
@@ -202,19 +231,7 @@ class HardwarePage extends React.Component {
                     <div className="Hardware-Panel Status-Panel">
                         <h3 className="Panel-Title">Status</h3>
                         {this.renderStatus(this.props.hardwareStatus)}
-                        {this.props.hardwareStatus === states.HardwareStatus.Connected ? 
-                            <button 
-                                className="Record-Button"
-                                onClick={this.props.recordHandler}>
-                                    Record
-                            </button> : 
-                            <button 
-                                className="Record-Button"
-                                disabled
-                                onClick={this.props.recordHandler}>
-                                    Record
-                            </button>
-                        }
+                        {RecordButton(this.props.hardwareStatus, this.props.recordHandler)}
                     </div>
                     <div className="Hardware-Panel Settings-Panel">
                         <h3 className="Panel-Title">Settings</h3>
