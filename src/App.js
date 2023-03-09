@@ -32,7 +32,6 @@ class App extends React.Component{
     while (now - start < ms) {
       now = Date.now();
     }
-    console.log(this.state.currentData);
   }
 
   // Test function for simulating data generation
@@ -40,7 +39,6 @@ class App extends React.Component{
     if (iter > 10) {
       return;
     }
-    console.log("simming");
     const start = (iter-1)*5;
     const end = (iter*5);
     let vals = []
@@ -56,15 +54,17 @@ class App extends React.Component{
     this.setState({
       currentData: newVals},
       () => {
-      this.wait(1000);
-      this.simDataGen(++iter);
+        setTimeout(() => {
+          this.simDataGen(++iter)
+        }, 1000)
     });
   }
 
   beginRecording() {
     this.setState({
       hardwareStatus: HWStates.HardwareStatus.Recording
-    }, this.simDataGen(1));
+    });
+    this.simDataGen(1)
     console.log("I will be recording now");
   }
 
