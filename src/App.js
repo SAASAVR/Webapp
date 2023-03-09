@@ -47,7 +47,7 @@ class App extends React.Component{
     for (let i = start; i < end; i++) {
       let x = i*(Math.PI/8);
       let y = Math.sin(x);
-      vals.push({"name": x, "val": y});
+      vals.push({"time": x, "val": y});
     }
     
     let curVals = this.state.currentData;
@@ -130,6 +130,7 @@ class App extends React.Component{
                     hardwareStatus={this.state.hardwareStatus}
                     onSettingsUpdate={(settings, option) => this.handleHardwareChange(settings, option)}
                     recordHandler={() => this.toggleRecording()}
+                    data={this.state.currentData}
                   />
       break;
       case states.AppTabs.Database:
