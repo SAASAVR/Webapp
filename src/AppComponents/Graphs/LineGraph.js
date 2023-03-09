@@ -16,9 +16,12 @@ class LineGraph extends React.Component {
             <ResponsiveContainer height={400}>
                 <LineChart data={this.props.data}
                     margin={{ top: 5, right: 50, bottom: 5 }}>
-                    <XAxis dataKey="time" />
-                    <YAxis />
-                    <Tooltip />
+                    <XAxis dataKey="time" stroke='#919191'/>
+                    <YAxis stroke='#919191'/>
+                    <Tooltip 
+                        wrapperStyle={{color: '#4e4d57' }}
+                        contentStyle={{backgroundColor: '#bcbcbc'}}
+                    />
                     <Line type="monotone" dataKey="val" stroke="#8884d8" />
                 </LineChart>
             </ResponsiveContainer>
