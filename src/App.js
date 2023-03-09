@@ -21,13 +21,50 @@ class App extends React.Component{
         threshold: 20,
       },
       hardwareStatus: HWStates.HardwareStatus.Connected,
+      currentData: [],
     }
+  }
+
+  // Test delay function
+  wait(ms) {
+    let start = Date.now(),
+        now = start;
+    while (now - start < ms) {
+      now = Date.now();
+    }
+    console.log(this.state.currentData);
+  }
+
+  // Test function for simulating data generation
+  simDataGen(iter) {
+    if (iter > 10) {
+      return;
+    }
+    console.log("simming");
+    const start = (iter-1)*5;
+    const end = (iter*5);
+    let vals = []
+    for (let i = start; i < end; i++) {
+      let x = i*(Math.PI/8);
+      let y = Math.sin(x);
+      vals.push({"name": x, "val": y});
+    }
+    
+    let curVals = this.state.currentData;
+    let newVals = curVals.concat(vals); 
+
+    this.setState({
+      currentData: newVals},
+      () => {
+      this.wait(1000);
+      this.simDataGen(++iter);
+    });
   }
 
   beginRecording() {
     this.setState({
       hardwareStatus: HWStates.HardwareStatus.Recording
-    });
+    }, this.simDataGen(1));
     console.log("I will be recording now");
   }
 
