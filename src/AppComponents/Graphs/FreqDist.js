@@ -8,10 +8,10 @@ class FreqDist extends React.Component {
 
     render() {
         return(
-            <ResponsiveContainer height={300} width='50%'>
+            <ResponsiveContainer height={400} width='50%'>
                 <BarChart data={this.props.data}>
-                    <XAxis dataKey="freq" />
-                    <YAxis />
+                    <XAxis dataKey="freq" stroke='#919191'/>
+                    <YAxis stroke='#919191'/>
                     <Tooltip 
                         wrapperStyle={{color: '#4e4d57' }}
                         contentStyle={{backgroundColor: '#bcbcbc'}}
