@@ -21,7 +21,8 @@ class App extends React.Component{
         threshold: 20,
       },
       hardwareStatus: HWStates.HardwareStatus.Connected,
-      currentData: [],
+      ampData: [],
+      freqData: [],
     }
   }
 
@@ -41,18 +42,23 @@ class App extends React.Component{
     }
     const start = (iter-1)*5;
     const end = (iter*5);
-    let vals = []
+    let ampVals = [];
+    let freqVals = [];
     for (let i = start; i < end; i++) {
       let x = i*(Math.PI/8);
       let y = Math.sin(x);
-      vals.push({"time": x, "val": y});
+      ampVals.push({"time": x, "val": y});
+      freqVals.push({"time": x, "freq": Math.round(x%10), "val": Math.abs(y)})
     }
     
-    let curVals = this.state.currentData;
-    let newVals = curVals.concat(vals); 
+    let curAmpVals = this.state.ampData;
+    let curFreqVals = this.state.freqData;
+    let newAmpVals = curAmpVals.concat(ampVals); 
+    let newFreqVals = curFreqVals.concat(freqVals);
 
     this.setState({
-      currentData: newVals},
+      ampData: newAmpVals,
+      freqData: newFreqVals},
       () => {
         setTimeout(() => {
           this.simDataGen(++iter)
@@ -130,7 +136,8 @@ class App extends React.Component{
                     hardwareStatus={this.state.hardwareStatus}
                     onSettingsUpdate={(settings, option) => this.handleHardwareChange(settings, option)}
                     recordHandler={() => this.toggleRecording()}
-                    data={this.state.currentData}
+                    ampData={this.state.ampData}
+                    freqData={this.state.freqData}
                   />
       break;
       case states.AppTabs.Database:

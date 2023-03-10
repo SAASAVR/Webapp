@@ -7,6 +7,7 @@ import './HardwarePage.css'
 
 import * as states from './HardwareStates.js';
 import LineGraph from '../Graphs/LineGraph.js';
+import FreqDist from '../Graphs/FreqDist.js';
 
 function RecordButton(state, handler) {
     let button;
@@ -217,11 +218,22 @@ class HardwarePage extends React.Component {
                 </div>
                 <div className="Hardware-Panel Right-Side Stream-Panel">
                     <h3 className="Panel-Title">Stream</h3>
-                    <LineGraph data={this.props.data}></LineGraph>
+                    <LineGraph data={this.props.ampData}></LineGraph>
+                    <FreqDist data={getFreqDist(this.props.freqData)}></FreqDist>
                 </div>
             </div>
         );
     }
+}
+
+function getFreqDist(data) {
+    const map = new Map();
+    for (const obj of data) {
+        let freq = obj['freq'];
+        let initSum = map.get(freq) || 0;
+        map.set(freq, initSum+obj['val']);
+    }
+    return Array.from(map, ([f, v]) => ({'freq': f, 'val': v}));
 }
 
 export default HardwarePage
