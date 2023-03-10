@@ -6,9 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './HardwarePage.css'
 
 import * as states from './HardwareStates.js';
-import * as utils from '../Utils.js';
-import LineGraph from '../Graphs/LineGraph.js';
-import FreqDist from '../Graphs/FreqDist.js';
+import HardwareStream from './HardwareStream.js';
 
 function RecordButton(state, handler) {
     let button;
@@ -219,8 +217,9 @@ class HardwarePage extends React.Component {
                 </div>
                 <div className="Hardware-Panel Right-Side Stream-Panel">
                     <h3 className="Panel-Title">Stream</h3>
-                    <LineGraph data={this.props.ampData}></LineGraph>
-                    <FreqDist data={utils.getFreqDist(this.props.freqData)}></FreqDist>
+                    <HardwareStream 
+                        ampData={this.props.ampData}
+                        freqData={this.props.freqData}></HardwareStream>
                 </div>
             </div>
         );
