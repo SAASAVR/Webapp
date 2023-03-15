@@ -10,8 +10,10 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    margin-top: 1.5em;
+    margin-right: 1em;
 }
 
-.recharts-wrapper {
-    position: absolute
+.Freq-Graphs .child {
+    bottom: 0px;
 }

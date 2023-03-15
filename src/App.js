@@ -26,15 +26,6 @@ class App extends React.Component{
     }
   }
 
-  // Test delay function
-  wait(ms) {
-    let start = Date.now(),
-        now = start;
-    while (now - start < ms) {
-      now = Date.now();
-    }
-  }
-
   // Test function for simulating data generation
   simDataGen(iter) {
     if (iter > 10) {
@@ -48,7 +39,8 @@ class App extends React.Component{
       let x = i*(Math.PI/8);
       let y = Math.sin(x);
       ampVals.push({"time": x, "val": y});
-      freqVals.push({"time": x, "freq": Math.round(x%10), "val": Math.abs(y)})
+      console.log(i);
+      freqVals.push({"time": i, "freq": Math.round(x*100), "val": Math.abs(y)})
     }
     
     let curAmpVals = this.state.ampData;
