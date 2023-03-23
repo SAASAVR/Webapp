@@ -6,6 +6,37 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import './HardwarePage.css'
 
 import * as states from './HardwareStates.js';
+import HardwareStream from './HardwareStream.js';
+
+function RecordButton(state, handler) {
+    let button;
+
+    switch (state) {
+        case states.HardwareStatus.Connected:
+            button = <button 
+                        className="Record-Button"
+                        onClick={handler}>
+                            Record
+                    </button>;
+        break;
+        case states.HardwareStatus.Recording:
+            button = <button 
+                        className="Stop-Record-Button"
+                        onClick={handler}>
+                            Stop
+                    </button>;
+        break;
+        default: 
+            button = <button 
+                        className="Record-Button"
+                        disabled
+                        onClick={handler}>
+                            Record
+                    </button>
+    }
+    return button;
+}
+
 
 class HardwarePage extends React.Component {
     // Status of Hardware
@@ -36,7 +67,6 @@ class HardwarePage extends React.Component {
                 statusIndicator = <FontAwesomeIcon icon={statusIcon} color="gray"/>
                 recordIndicator = <FontAwesomeIcon icon={recordIcon} color="gray"/>
             break;
-
         }
 
         return (
@@ -77,6 +107,40 @@ class HardwarePage extends React.Component {
 
         ];
 
+        // Styles for ReactSelects
+        const selectTheme =  (theme) => ({
+                ...theme,
+                colors: {
+                ...theme.colors,
+                neutral0: '#1b1c1e',
+                neutral5: 'white',
+                neutral10: 'white',
+                neutral50: 'white',
+                neutral80: 'white',
+                primary25: '#383b45',
+                primary50: '#383b45',
+                primary: '#383b45',
+                },
+            })
+        const selectStyle = {
+            control: (provided, state) => ({
+                ...provided,
+                boxShadow: "none",
+                border: "none"
+            }),
+            menu: (provided, state) => ({
+                ...provided,
+                border: "1px solid #1b1c1e",
+                backgroundColor: "#383b45",
+                boxShadow: "none"
+            }),
+            option: (provided, state) => ({
+                ...provided,
+                backgroundColor: state.isFocused && "#1b1c1e",
+                color: state.isFocused && "white"
+            })
+            }
+
         let name = states.getHardwareOptionsString(setting);
         let setter;
         switch (setting) {
@@ -92,38 +156,8 @@ class HardwarePage extends React.Component {
                             onChange={(newVal) => this.props.onSettingsUpdate(
                                 setting, newVal.value
                             )}
-                            theme={(theme) => ({
-                                ...theme,
-                                colors: {
-                                ...theme.colors,
-                                  neutral0: '#1b1c1e',
-                                  neutral5: 'white',
-                                  neutral10: 'white',
-                                  neutral50: 'white',
-                                  neutral80: 'white',
-                                  primary25: '#383b45',
-                                  primary50: '#383b45',
-                                  primary: '#383b45',
-                                },
-                              })}
-                              styles={{
-                                control: (provided, state) => ({
-                                  ...provided,
-                                  boxShadow: "none",
-                                  border: "none"
-                                }),
-                                menu: (provided, state) => ({
-                                  ...provided,
-                                  border: "1px solid #1b1c1e",
-                                  backgroundColor: "#383b45",
-                                  boxShadow: "none"
-                                }),
-                                option: (provided, state) => ({
-                                   ...provided,
-                                   backgroundColor: state.isFocused && "#1b1c1e",
-                                   color: state.isFocused && "white"
-                                })
-                              }}>
+                            theme={selectTheme}
+                            styles={selectStyle}>
                         </ReactSelect>
             break;
             case states.HardwareOptions.SensorActivated:
@@ -149,38 +183,8 @@ class HardwarePage extends React.Component {
                             onChange={(newVal) => this.props.onSettingsUpdate(
                                 setting, newVal.value
                             )}
-                            theme={(theme) => ({
-                                ...theme,
-                                colors: {
-                                ...theme.colors,
-                                  neutral0: '#1b1c1e',
-                                  neutral5: 'white',
-                                  neutral10: 'white',
-                                  neutral50: 'white',
-                                  neutral80: 'white',
-                                  primary25: '#383b45',
-                                  primary50: '#383b45',
-                                  primary: '#383b45',
-                                },
-                              })}
-                              styles={{
-                                control: (provided, state) => ({
-                                  ...provided,
-                                  boxShadow: "none",
-                                  border: "none"
-                                }),
-                                menu: (provided, state) => ({
-                                  ...provided,
-                                  border: "1px solid #1b1c1e",
-                                  backgroundColor: "#383b45",
-                                  boxShadow: "none"
-                                }),
-                                option: (provided, state) => ({
-                                   ...provided,
-                                   backgroundColor: state.isFocused && "#1b1c1e",
-                                   color: state.isFocused && "white"
-                                })
-                              }}>
+                            theme={selectTheme}
+                            styles={selectStyle}>
                         </ReactSelect>
             break;
             default:
@@ -202,19 +206,7 @@ class HardwarePage extends React.Component {
                     <div className="Hardware-Panel Status-Panel">
                         <h3 className="Panel-Title">Status</h3>
                         {this.renderStatus(this.props.hardwareStatus)}
-                        {this.props.hardwareStatus === states.HardwareStatus.Connected ? 
-                            <button 
-                                className="Record-Button"
-                                onClick={this.props.recordHandler}>
-                                    Record
-                            </button> : 
-                            <button 
-                                className="Record-Button"
-                                disabled
-                                onClick={this.props.recordHandler}>
-                                    Record
-                            </button>
-                        }
+                        {RecordButton(this.props.hardwareStatus, this.props.recordHandler)}
                     </div>
                     <div className="Hardware-Panel Settings-Panel">
                         <h3 className="Panel-Title">Settings</h3>
@@ -225,6 +217,9 @@ class HardwarePage extends React.Component {
                 </div>
                 <div className="Hardware-Panel Right-Side Stream-Panel">
                     <h3 className="Panel-Title">Stream</h3>
+                    <HardwareStream 
+                        ampData={this.props.ampData}
+                        freqData={this.props.freqData}></HardwareStream>
                 </div>
             </div>
         );

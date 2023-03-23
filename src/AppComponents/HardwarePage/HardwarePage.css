@@ -21,6 +21,8 @@
 }
 
 .Right-Side {
+    display: flex;
+    flex-direction: column;
     width: 80%;
     margin-left: 1em;
 }
@@ -73,6 +75,25 @@
     cursor: default;
 }
 
+.Stop-Record-Button {
+    background-color: #850000;
+    outline: none;
+    border: #1b1c1e;
+    width: 150px;
+    color: white;
+    font-size: 15px;
+    padding: 0.5em;
+    border-radius: 5px;
+    margin: 1em;
+    margin-top: 0em;
+    cursor: pointer;
+}
+
+.Stop-Record-Button:hover {
+    background-color: #570101;
+}
+
+
 .Settings-Panel { 
     flex-direction: column;
     margin-top: 1em;
@@ -93,7 +114,7 @@
 }
 
 .Stream-Panel {
-    height: 1000px;
+    height: 1100px;
 }
 
 .Select {

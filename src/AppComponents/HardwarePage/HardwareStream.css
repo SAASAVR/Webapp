@@ -1,0 +1,19 @@
+.Hardware-Stream {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.Freq-Graphs {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 1.5em;
+    margin-right: 1em;
+}
+
+.Freq-Graphs .child {
+    bottom: 0px;
+}

@@ -21,15 +21,67 @@ class App extends React.Component{
         threshold: 20,
       },
       hardwareStatus: HWStates.HardwareStatus.Connected,
+      ampData: [],
+      freqData: [],
     }
   }
 
-  // Function to handle recording -> connect to hardware
+  // Test function for simulating data generation
+  simDataGen(iter) {
+    if (iter > 10) {
+      return;
+    }
+    const start = (iter-1)*5;
+    const end = (iter*5);
+    let ampVals = [];
+    let freqVals = [];
+    for (let i = start; i < end; i++) {
+      let x = i*(Math.PI/8);
+      let y = Math.sin(x);
+      ampVals.push({"time": x, "val": y});
+      console.log(i);
+      freqVals.push({"time": i, "freq": Math.round(x*100), "val": Math.abs(y)})
+    }
+    
+    let curAmpVals = this.state.ampData;
+    let curFreqVals = this.state.freqData;
+    let newAmpVals = curAmpVals.concat(ampVals); 
+    let newFreqVals = curFreqVals.concat(freqVals);
+
+    this.setState({
+      ampData: newAmpVals,
+      freqData: newFreqVals},
+      () => {
+        setTimeout(() => {
+          this.simDataGen(++iter)
+        }, 1000)
+    });
+  }
+
   beginRecording() {
     this.setState({
       hardwareStatus: HWStates.HardwareStatus.Recording
     });
+    this.simDataGen(1)
     console.log("I will be recording now");
+  }
+
+  stopRecording() {
+    this.setState({
+      hardwareStatus: HWStates.HardwareStatus.Saving
+    });
+    console.log("I am not recording now");
+  }
+
+  // Function to handle recording -> connect to hardware
+  toggleRecording() {
+    let newStateFunc;
+    if (this.state.hardwareStatus === HWStates.HardwareStatus.Connected) {
+      newStateFunc = () => this.beginRecording();
+    } else {
+      newStateFunc = () => this.stopRecording();
+    }
+    newStateFunc.call();
   }
 
   // Function for handling changing hardware settings
@@ -75,7 +127,9 @@ class App extends React.Component{
                     hardwareSettings={this.state.hardwareSet}
                     hardwareStatus={this.state.hardwareStatus}
                     onSettingsUpdate={(settings, option) => this.handleHardwareChange(settings, option)}
-                    recordHandler={() => this.beginRecording()}
+                    recordHandler={() => this.toggleRecording()}
+                    ampData={this.state.ampData}
+                    freqData={this.state.freqData}
                   />
       break;
       case states.AppTabs.Database:
