@@ -73,5 +73,5 @@ export {
     getFreqDist,
     getSpectrogramData,
     discreteFourierTransform,
-    testDatam,
+    testData,
     testSamplingRate};

@@ -28,33 +28,20 @@ class App extends React.Component{
 
   // Test function for simulating data generation
   simDataGen(iter) {
-    if (iter > 10) {
+    if (iter > 500) {
       return;
     }
     const start = (iter-1)*5;
     const end = (iter*5);
-    let ampVals = [];
-    let freqVals = [];
-    for (let i = start; i < end; i++) {
-      let x = i*(Math.PI/8);
-      let y = Math.sin(x);
-      ampVals.push({"time": x, "val": y});
-      console.log(i);
-      freqVals.push({"time": i, "freq": Math.round(x*100), "val": Math.abs(y)})
-    }
-    
-    let curAmpVals = this.state.ampData;
-    let curFreqVals = this.state.freqData;
-    let newAmpVals = curAmpVals.concat(ampVals); 
-    let newFreqVals = curFreqVals.concat(freqVals);
+    let newData = this.state.curData.concat(utils.testData.slice(start, end));
 
     this.setState({
-      ampData: newAmpVals,
-      freqData: newFreqVals},
+      data: newData
+      },
       () => {
         setTimeout(() => {
           this.simDataGen(++iter)
-        }, 1000)
+        }, 250)
     });
   }
 
