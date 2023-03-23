@@ -1,3 +1,23 @@
+function getTimeVals(dataLen, sampleRate) {
+    var timeVals = [];
+    const step = 1/sampleRate;
+    for (let i = 0; i < dataLen; i++) {
+        timeVals.push(i*step);
+    }
+    return timeVals;
+}
+
+function packAmplVals(timeVals, data) {
+    var ampVals = [];
+    for (let i = 0; i < data.length; i++) {
+        ampVals.push({
+            'time': timeVals[i],
+            'amp': data[i]
+        })
+    }
+    return ampVals
+}
+
 function getFreqDist(data) {
     const map = new Map();
     for (const obj of data) {
@@ -70,6 +90,8 @@ const testData = [
 const testSampleRate = 22050;
 
 export {
+    getTimeVals,
+    packAmpVals,
     getFreqDist,
     getSpectrogramData,
     discreteFourierTransform,

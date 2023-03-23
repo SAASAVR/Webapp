@@ -28,7 +28,7 @@ class App extends React.Component{
 
   // Test function for simulating data generation
   simDataGen(iter) {
-    if (iter > 500) {
+    if (iter > 1000) {
       return;
     }
     const start = (iter-1)*5;
@@ -41,7 +41,7 @@ class App extends React.Component{
       () => {
         setTimeout(() => {
           this.simDataGen(++iter)
-        }, 250)
+        }, 100)
     });
   }
 
