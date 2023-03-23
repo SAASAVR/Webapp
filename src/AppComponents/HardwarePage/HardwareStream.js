@@ -11,17 +11,18 @@ const freqRange = new Array(300).fill(0).map((_, i) => `${(300-i)*40}`)
 class HardwareStream extends React.Component {
 
     render() {
-        let spectroData = utils.getSpectrogramData(freqRange, this.props.freqData);
+        let freqData = utils.discreteFourierTransform(this.props.data, this.props.sampleRate);
+        let spectroData = utils.getSpectrogramData(freqRange, freqData);
         return (
             <div className='Hardware-Stream'>
                 <LineGraph data={this.props.ampData}></LineGraph>
-                <div className='Freq-Graphs'>
+                {/* <div className='Freq-Graphs'>
                     <Spectrogram 
                             xvals={spectroData.xvals}
                             yvals={spectroData.yvals}
                             data={spectroData.data}></Spectrogram>
                     <FreqDist data={utils.getFreqDist(this.props.freqData)}></FreqDist>
-                </div>
+                </div> */}
             </div>
         )
     }

@@ -218,8 +218,8 @@ class HardwarePage extends React.Component {
                 <div className="Hardware-Panel Right-Side Stream-Panel">
                     <h3 className="Panel-Title">Stream</h3>
                     <HardwareStream 
-                        ampData={this.props.ampData}
-                        freqData={this.props.freqData}></HardwareStream>
+                        data={this.props.data}
+                        sampleRate={this.props.sampleRate}></HardwareStream>
                 </div>
             </div>
         );

@@ -2,7 +2,7 @@ import React from 'react';
 
 import './App.css';
 
-
+import * as utils from './AppComponents/Utils.js';
 import Header from './AppComponents/Header.js';
 import * as states from './AppComponents/AppTabStates.js';
 import * as HWStates from './AppComponents/HardwarePage/HardwareStates.js';
@@ -21,8 +21,8 @@ class App extends React.Component{
         threshold: 20,
       },
       hardwareStatus: HWStates.HardwareStatus.Connected,
-      ampData: [],
-      freqData: [],
+      curData: [],
+      samplingRate: 0
     }
   }
 
@@ -60,7 +60,8 @@ class App extends React.Component{
 
   beginRecording() {
     this.setState({
-      hardwareStatus: HWStates.HardwareStatus.Recording
+      hardwareStatus: HWStates.HardwareStatus.Recording,
+      samplingRate: utils.testSampleRate,
     });
     this.simDataGen(1)
     console.log("I will be recording now");
@@ -128,8 +129,8 @@ class App extends React.Component{
                     hardwareStatus={this.state.hardwareStatus}
                     onSettingsUpdate={(settings, option) => this.handleHardwareChange(settings, option)}
                     recordHandler={() => this.toggleRecording()}
-                    ampData={this.state.ampData}
-                    freqData={this.state.freqData}
+                    data={this.state.curData}
+                    sampleRate={this.state.sampleRate}
                   />
       break;
       case states.AppTabs.Database:
