@@ -1,0 +1,122 @@
+.Hardware-Page {
+    display: flex;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 2em;
+}
+
+.Hardware-Panel {
+    display: flex;
+    text-align: justify;
+    justify-content: left;
+    border-radius: 10px;
+    background-color: #383b45;
+}
+
+.Left-Side {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    margin-right: 1em;
+}
+
+.Right-Side {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin-left: 1em;
+}
+
+.Panel-Title {
+    width: 0 auto;
+    margin-left: 1em;
+}
+
+.Status-Panel { 
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
+.Status-Pane {
+    margin-bottom: 0.5em;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.Status-Row {
+    margin-top: 0em;
+    margin-bottom: 1em;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+}
+
+.Record-Button {
+    background-color: #1b1c1e;
+    outline: none;
+    border: #1b1c1e;
+    width: 150px;
+    color: white;
+    font-size: 15px;
+    padding: 0.5em;
+    border-radius: 5px;
+    margin: 1em;
+    margin-top: 0em;
+    cursor: pointer;
+}
+
+.Record-Button:hover {
+    background-color: #303030;
+}
+
+.Record-Button:disabled {
+    color: grey;
+    opacity: 0.7;
+    cursor: default;
+}
+
+.Stop-Record-Button {
+    background-color: #850000;
+    outline: none;
+    border: #1b1c1e;
+    width: 150px;
+    color: white;
+    font-size: 15px;
+    padding: 0.5em;
+    border-radius: 5px;
+    margin: 1em;
+    margin-top: 0em;
+    cursor: pointer;
+}
+
+.Stop-Record-Button:hover {
+    background-color: #570101;
+}
+
+
+.Settings-Panel { 
+    flex-direction: column;
+    margin-top: 1em;
+}
+
+.Status-Name {
+    margin: 0em;
+}
+
+.Settings-Option {
+    position: relative;
+    margin-bottom: 0.5em;
+    margin-left: 1em;
+    margin-right: 1em;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+}
+
+.Stream-Panel {
+    height: 1100px;
+}
+
+.Select {
+    width: 140px;
+}
