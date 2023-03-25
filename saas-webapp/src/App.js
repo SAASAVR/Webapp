@@ -3,7 +3,6 @@ import { io } from "socket.io-client";
 
 import './App.css';
 
-import * as utils from './AppComponents/Utils.js';
 import Header from './AppComponents/Header.js';
 import * as states from './AppComponents/AppTabStates.js';
 import * as HWStates from './AppComponents/HardwarePage/HardwareStates.js';
@@ -58,41 +57,47 @@ class App extends React.Component{
       this.setState({
         hardwareStatus: HWStates.HardwareStatus.Connecting,
       });
-    })
+    });
 
     socket.on("SAAS-ready", () => {
       this.setState({
         hardwareStatus: HWStates.HardwareStatus.Connected,
       })
-    })
-  }
+    });
 
-  // Test function for simulating data generation
-  simDataGen(iter) {
-    if (iter > 1000) {
-      return;
-    }
-    const start = (iter-1)*5;
-    const end = (iter*5);
-    let newData = this.state.curData.concat(utils.testData.slice(start, end));
-
-    this.setState({
-      data: newData
-      },
-      () => {
-        setTimeout(() => {
-          this.simDataGen(++iter)
-        }, 100)
+    socket.on("SAAS-recording", (data) => {
+      console.log("Received sample rate: " + data.samplerate);
+      this.setState({
+        samplingRate: data.sampleRate,
+      })
     });
   }
+
+  // // Test function for simulating data generation
+  // simDataGen(iter) {
+  //   if (iter > 1000) {
+  //     return;
+  //   }
+  //   const start = (iter-1)*5;
+  //   const end = (iter*5);
+  //   let newData = this.state.curData.concat(utils.testData.slice(start, end));
+
+  //   this.setState({
+  //     data: newData
+  //     },
+  //     () => {
+  //       setTimeout(() => {
+  //         this.simDataGen(++iter)
+  //       }, 100)
+  //   });
+  // }
 
   beginRecording() {
     this.setState({
       hardwareStatus: HWStates.HardwareStatus.Recording,
-      samplingRate: utils.testSampleRate,
     });
-    this.simDataGen(1)
     console.log("I will be recording now");
+    this.state.socket.emit("UI-record-request", this.state.hardwareSet);
   }
 
   stopRecording() {

@@ -75,14 +75,8 @@ function discreteFourierTransform(data, sr) {
     return data;
 }
 
-const testData = [0];
-
-const testSampleRate = 22050;
-
 export {
     packAmpVals,
     getFreqDist,
     getSpectrogramData,
-    discreteFourierTransform,
-    testData,
-    testSampleRate};
+    discreteFourierTransform};
