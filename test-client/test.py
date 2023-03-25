@@ -9,7 +9,6 @@ if __name__ == '__main__':
     time.sleep(1)
     sio.emit("SAAS-ready")
 
-    # If the test has reached the ready state but it has not been communicated
-    # to the UI yet, then re-send
+    
 
 
