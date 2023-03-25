@@ -1,0 +1,71 @@
+.Header {
+    position: relative;
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: right;
+    text-align: justify;
+    align-items: baseline;
+    padding: 2em;
+    padding-top: 0em;
+    padding-bottom: 0em;
+    margin-bottom: 0em;
+    background-color: rgb(71, 76, 93);
+    color: white;
+}
+
+.Title {
+    width: 0 auto;
+    font-size: 45px;
+    padding: 0em;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
+.Header-Button-Row {
+    position: absolute;
+    bottom: 0;
+    left: 2em;
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 0em;
+}
+
+.Header-Button {
+    align-self: flex-end;
+    transition: height 0.1s;
+    display: flex;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-left: 0em;
+    margin-right: 1em;
+    padding: 1em;
+    height: 1.5em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    background-color: #191c28;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+}
+
+.Header-Button:hover {
+    height: 2em;
+    cursor: pointer;
+}
+
+.Active-Button {
+    height: 2em;
+    background-color: rgb(43, 45, 56);
+}
+
+.Header-Button-Name{
+    margin-left: 0.5em;
+    margin-block-end: 0em;
+    margin-block-start: 0em;
+}
+
+.Setter {
+    margin-left: 0.5em;
+}
