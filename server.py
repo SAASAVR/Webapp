@@ -20,13 +20,19 @@ def UIConnected():
     print("UI has connected")
     emit("UI-connect", {"data":f"id: {request.sid} is connected"})
 
-
 @socketio.on("SAAS-connect")
 def SAASconnected():
     """event listener for when the SAAS connects"""
     print(request.sid)
     print("SAAS has connected")
-    emit("connect", {"data":f"id: {request.sid} is connected"})
+    emit("SAAS-connect", broadcast=True)
+
+@socketio.on("SAAS-ready")
+def SAASready():
+    """event listener for when the SAAS is ready to record"""
+    print(request.sid)
+    print("SAAS is ready to record")
+    emit("SAAS-ready", broadcast=True)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

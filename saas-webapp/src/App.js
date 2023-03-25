@@ -14,12 +14,14 @@ class App extends React.Component{
 
   constructor(props) {
     super(props);
+
     const servSocket = io("localhost:5000/", {
       transports: ["websocket"],
       cors: {
         origin: "http://localhost:3000/",
       },
     });
+
     this.state = {
       socket: servSocket,
       currentTab: states.AppTabs.Hardware,
@@ -28,14 +30,12 @@ class App extends React.Component{
         sensorAct: false,
         threshold: 20,
       },
-      hardwareStatus: HWStates.HardwareStatus.Connected,
+      hardwareStatus: HWStates.HardwareStatus.NotConnected,
       curData: [],
       samplingRate: 0
     }
 
-    servSocket.on("UI-connect", (data) => {
-      console.log(data);
-    });
+    this.initSocketHandling(servSocket)
 
     window.addEventListener('beforeunload', (event) => {
       // Cancel the event as stated by the standard.
@@ -47,8 +47,24 @@ class App extends React.Component{
     
       this.props.apiCall();
     });
-    
+  
     servSocket.emit("UI-connect")
+  }
+
+  // Initiates socket handlers for the front-end
+  initSocketHandling(socket) {
+    socket.on("SAAS-connect", () => {
+      console.log("SAAS connected")
+      this.setState({
+        hardwareStatus: HWStates.HardwareStatus.Connecting,
+      });
+    })
+
+    socket.on("SAAS-ready", () => {
+      this.setState({
+        hardwareStatus: HWStates.HardwareStatus.Connected,
+      })
+    })
   }
 
   // Test function for simulating data generation
