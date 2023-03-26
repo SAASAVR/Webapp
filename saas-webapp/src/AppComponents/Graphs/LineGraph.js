@@ -19,7 +19,7 @@ class LineGraph extends React.Component {
                         contentStyle={{backgroundColor: '#bcbcbc'}}
                     />
                      <Brush dataKey='name' height={15} stroke="#8884d8"/>
-                    <Line type="monotone" dataKey="val" stroke="#8884d8" dot={false}/>
+                    <Line type="monotone" dataKey="amp" stroke="#8884d8" dot={false}/>
                 </LineChart>
             </ResponsiveContainer>
         )

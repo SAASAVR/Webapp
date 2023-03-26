@@ -20,7 +20,7 @@ class HardwareStream extends React.Component {
         let spectroData = utils.getSpectrogramData(freqRange, freqData);
         return (
             <div className='Hardware-Stream'>
-                <LineGraph data={this.props.ampData}></LineGraph>
+                <LineGraph data={ampData}></LineGraph>
                 {/* <div className='Freq-Graphs'>
                     <Spectrogram 
                             xvals={spectroData.xvals}

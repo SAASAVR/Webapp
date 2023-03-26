@@ -68,9 +68,19 @@ class App extends React.Component{
     socket.on("SAAS-recording", (data) => {
       console.log("Received sample rate: " + data.samplerate);
       this.setState({
-        samplingRate: data.sampleRate,
+        samplingRate: data.samplerate,
       })
+      socket.emit("UI-ready-for-data");
     });
+
+    socket.on("SAAS-send-data", (data) => {
+      console.log("Received data from SAAS");
+      let newData = this.state.curData.concat(data["vals"]);
+      this.setState({
+        curData: newData
+      });
+    })
+
   }
 
   // // Test function for simulating data generation
@@ -105,6 +115,7 @@ class App extends React.Component{
       hardwareStatus: HWStates.HardwareStatus.Saving
     });
     console.log("I am not recording now");
+    this.state.socket.emit("UI-stop-request");
   }
 
   // Function to handle recording -> connect to hardware
@@ -163,7 +174,7 @@ class App extends React.Component{
                     onSettingsUpdate={(settings, option) => this.handleHardwareChange(settings, option)}
                     recordHandler={() => this.toggleRecording()}
                     data={this.state.curData}
-                    sampleRate={this.state.sampleRate}
+                    sampleRate={this.state.samplingRate}
                   />
       break;
       case states.AppTabs.Database:

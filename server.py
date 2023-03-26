@@ -45,5 +45,24 @@ def SAASrecording(data):
     print("received sample rate is " + str(data["samplerate"]))
     emit("SAAS-recording", {"samplerate": data["samplerate"]}, broadcast=True)
 
+@socketio.on("UI-ready-for-data")
+def UIIngesting():
+    print("UI beginning to ingest data")
+    emit("UI-ready-for-data", broadcast=True)
+
+@socketio.on("SAAS-send-data")
+def SAASsending(data):
+    print("SAAS sending data with  " + str(len(data["vals"])) + " elements")
+    emit("SAAS-send-data", data, broadcast=True)
+
+@socketio.on("UI-stop-request")
+def UIRequestStop():
+    print("UI requesting recording to stop")
+    emit("UI-stop-request", broadcast=True)
+
+@socketio.on("SAAS-stopping-recording")
+def SAASstopping():
+    print("SAAS stopping recording")
+
 if __name__ == '__main__':
     socketio.run(app, debug=True)
