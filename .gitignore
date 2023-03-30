@@ -25,6 +25,10 @@ chrome-user-data
 *.swo
 
 test-client/test-env
+.venv
+venv
+env
+
 
 packages/react-devtools-core/dist
 packages/react-devtools-extensions/chrome/build
