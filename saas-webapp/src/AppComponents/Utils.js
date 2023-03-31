@@ -10,7 +10,11 @@ function getNewTimeIndexCutoff(timeVals, prevCutoff, timeDisplayed) {
 }
 
 function packAmpVals(timeVals, data, dsFactor, prevCutoff) {
-    var ampVals = [];
+    if (data.length == 0) {
+        return [{'time': 0, 'amp': 0}]
+    }
+
+    let ampVals = [];
     for (let i = prevCutoff; i < data.length; i += dsFactor) {
         ampVals.push({
             'time': timeVals[i],
@@ -98,10 +102,33 @@ function discreteFourierTransform(data) {
     return spectrum;
 }
 
+function extractMLAmpVals(packedData, output, clipSize) {
+    let data = [];
+    packedData.forEach((val) => {
+            let outputIndex = Math.floor(val['time']/clipSize);
+            let curOutput = output[outputIndex];
+            if (curOutput === 0) {
+                data.push({
+                    'time': val['time'],
+                    'undetectedAmp': val['amp'],
+                    'detectedAmp': 0
+                });
+            } else {
+                data.push({
+                    'time': val['time'],
+                    'undetectedAmp': 0,
+                    'detectedAmp': val['amp']
+                });
+            }
+    });
+    return data;
+}
+
 export {
     getNewTimeIndexCutoff,
     packAmpVals,
     packFreqVals,
     getFreqDist,
     getSpectrogramData,
-    discreteFourierTransform};
+    discreteFourierTransform,
+    extractMLAmpVals};

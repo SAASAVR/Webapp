@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import './DatabasePage.css'
 import '../../App.css'
+import * as utils from '../Utils.js';
 import * as states from './DatabaseStates.js';
 
 //// import { useState } from 'react';
@@ -55,7 +56,18 @@ class DatabasePage extends React.Component {
       currentTab: states.AudioTabs.AudioDescription,
       audios: [],
       currentAudioIndex: 0,
-      currentAudioData: {},
+      currentAudioData:
+        {
+          'Output': [],
+          'ArrayData': [], 
+          'AudioData': {
+              'sr': 0,
+              'size': 0,
+              'clipLength': 0
+          }, 
+          'MLData': {},
+          // 'Spectrogram': []
+      },
       socket: this.props.socket
     }
     this.handleHeaderClick = this.handleHeaderClick.bind(this);
@@ -81,6 +93,7 @@ class DatabasePage extends React.Component {
       this.setState({
         currentAudioData: data
       });
+      this.forceUpdate();
     });
   }
 
@@ -117,21 +130,25 @@ class DatabasePage extends React.Component {
   render() {
     let curPage;
     // list of tabs
+    const arrayDataDSFactor = 16;
+    const timeVals = new Array(this.state.currentAudioData['ArrayData'].length)
+        .fill(0)
+        .map((_, i) => 
+            {return i*(1/this.state.currentAudioData['AudioData']['sr'])});
+            const downsampled = utils.packAmpVals(timeVals, this.state.currentAudioData['ArrayData'], arrayDataDSFactor, 0);
     switch(this.state.currentTab) {
       case states.AudioTabs.AudioDescription:
+        
         curPage = <AudioDescripitonPage
                     audio={this.state.audios[this.state.currentAudioIndex]}
-                    arraydata={this.state.currentAudioData['ArrayData']}
-                    audiodata={this.state.currentAudioData['AudioData']}
-                    spectrogram={this.state.currentAudioData['Spectrogram']}>
+                    downsampledVals = {downsampled}>
                   </AudioDescripitonPage>
       break;
       case states.AudioTabs.MLDescription:
+        const mlOutputs = utils.extractMLAmpVals(downsampled, this.state.currentAudioData['Output'],this.state.currentAudioData['AudioData']['clipLength']);
         curPage = <MLDescriptionPage
                     audio={this.state.audios[this.state.currentAudioIndex]}
-                    arraydata={this.state.currentAudioData['ArrayData']}
-                    audiodata={this.state.currentAudioData['AudioData']}
-                    mldata={this.state.currentAudioData['MLData']}>
+                    mlData={mlOutputs}>
                   </MLDescriptionPage>
       break;
       default:

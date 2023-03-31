@@ -4,7 +4,7 @@ import { LineChart, ResponsiveContainer, XAxis, YAxis, Tooltip, Line } from "rec
 
 import './LineGraph.css'
 
-class LineGraph extends React.Component {
+class LineGraphML extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -32,11 +32,12 @@ class LineGraph extends React.Component {
                         wrapperStyle={{color: '#4e4d57' }}
                         contentStyle={{backgroundColor: '#bcbcbc'}}
                     />
-                    <Line type="monotone" dataKey="amp" stroke="#8884d8" dot={false}/>
+                    <Line type="monotone" dataKey="undetectedAmp" stroke="#8884d8" dot={false}/>
+                    <Line type="monotone" dataKey="detectedAmp" stroke="#00b415" dot={false}/>
                 </LineChart>
             </ResponsiveContainer>
         )
     }
 }
 
-export default LineGraph
+export default LineGraphML

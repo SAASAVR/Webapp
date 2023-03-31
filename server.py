@@ -77,6 +77,7 @@ def getAudioData(id):
     doc = queryAudio(id)
     emit("Receive-audio-data", 
         {
+            'Output': [int(i) for i in doc['output']],
             'ArrayData': [float(i) for i in binaryData2numpy(doc['fileBytes'])], 
             'AudioData': {
                 'sr': doc['AudioData']['sr'],
