@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
+import json
 
 app = Flask(__name__)
 app.config['SECRET KEY'] = 'secret!'
@@ -74,7 +75,17 @@ def getAudios():
 def getAudioData(id):
     print("getting " + str(id) + " data")
     doc = queryAudio(id)
-    emit("Receive-audio-data", {'AudioData': doc['AudioData'], 'MLData': doc['MLData']}, broadcast=True)
+    emit("Receive-audio-data", 
+        {
+            'ArrayData': [float(i) for i in binaryData2numpy(doc['fileBytes'])], 
+            'AudioData': {
+                'sr': doc['AudioData']['sr'],
+                'size': doc['AudioData']['Size'],
+                'clipLength': doc['AudioData']['clipLength']
+            }, 
+            'MLData': doc['MLData'],
+            # 'Spectrogram': loadMelSpecBinary2Image(doc['AudioData']['MelSpectrumImgBytes'])
+        }, broadcast=True)
 
 
 import io

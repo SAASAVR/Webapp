@@ -74,6 +74,7 @@ class DatabasePage extends React.Component {
       if (audioArray.length > 0) {
         audioArray[0]['isActive'] = true;
       }
+      this.state.socket.emit("Query-audio-id", audioArray[0]['name']);
     });
 
     socket.on("Receive-audio-data", (data) => {
@@ -110,7 +111,7 @@ class DatabasePage extends React.Component {
       audios: newAudios,
       currentAudioIndex: audioIndex
     });
-    this.state.socket.emit("Query-audio-id");
+    this.state.socket.emit("Query-audio-id", this.state.audios[audioIndex]['name']);
   }
 
   render() {
@@ -120,13 +121,16 @@ class DatabasePage extends React.Component {
       case states.AudioTabs.AudioDescription:
         curPage = <AudioDescripitonPage
                     audio={this.state.audios[this.state.currentAudioIndex]}
-                    data={this.state.currentAudioData['AudioData']}>
+                    arraydata={this.state.currentAudioData['ArrayData']}
+                    audiodata={this.state.currentAudioData['AudioData']}
+                    spectrogram={this.state.currentAudioData['Spectrogram']}>
                   </AudioDescripitonPage>
       break;
       case states.AudioTabs.MLDescription:
         curPage = <MLDescriptionPage
                     audio={this.state.audios[this.state.currentAudioIndex]}
-                    data={this.state.currentAudioData['MLData']}>
+                    audiodata={this.state.currentAudioData['AudioData']}
+                    mldata={this.state.currentAudioData['MLData']}>
                   </MLDescriptionPage>
       break;
       default:
