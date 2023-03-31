@@ -129,6 +129,7 @@ class DatabasePage extends React.Component {
       case states.AudioTabs.MLDescription:
         curPage = <MLDescriptionPage
                     audio={this.state.audios[this.state.currentAudioIndex]}
+                    arraydata={this.state.currentAudioData['ArrayData']}
                     audiodata={this.state.currentAudioData['AudioData']}
                     mldata={this.state.currentAudioData['MLData']}>
                   </MLDescriptionPage>

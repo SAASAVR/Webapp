@@ -27,12 +27,10 @@ class AudioDescripitonPage extends React.Component {
                 downSampledData: utils.packAmpVals(timeVals, this.props.arraydata, arrayDataDSFactor, 0)
             }
         }
-        console.log('bruh');
         let audioName = `${this.props.audio == null ? 'none' : this.props.audio.name}`;
         return(
             <div className="Audio-Div">
                 <h3>Audio Description {audioName}</h3>
-                <LineGraph data={this.state.downSampledData}></LineGraph>
             </div>
         );
     }
