@@ -4,6 +4,8 @@ import LineGraph from '../Graphs/LineGraph.js';
 import FreqDist from '../Graphs/FreqDist.js';
 import Spectrogram from '../Graphs/Spectrogram.js';
 
+import * as HWStates from './HardwareStates.js';
+
 import './HardwareStream.css'
 
 const freqRange = new Array(300).fill(0).map((_, i) => `${(300-i)*40}`)
@@ -14,21 +16,31 @@ class HardwareStream extends React.Component {
 
         this.state = {
             ampData: [],
-            freqData: []
+            freqData: [],
+            prevTimeIndex: 0,
+            prevLen: 0,
         }
     }
 
-
     render() {
+        const ampDataDSFactor = 16;
+        const timeDisplayed = 0.5;
+        const freqDataLen = 128;
+        let timeStep = freqDataLen/this.props.sampleRate;
         let timeVals = new Array(this.props.data.length)
             .fill(0)
             .map((_, i) => 
                 {return i*(1/this.props.sampleRate)});
-        let ampData = utils.packAmpVals(timeVals, this.props.data);
-        let freqDataLen = 128;
-        let timeStep = freqDataLen/this.props.sampleRate;
-        let newFreqData = [];
-        if (ampData.length > this.state.ampData.length) {
+        if (this.props.data.length > this.state.prevLen && this.props.state === HWStates.HardwareStatus.Recording ) {
+            let newFreqData = [];
+            let newIndex = utils.getNewTimeIndexCutoff(timeVals, this.state.prevTimeIndex, timeDisplayed)
+            if (newIndex > this.state.prevTimeIndex) {
+                this.setState({
+                    prevTimeIndex: newIndex,
+                    prevLen: this.props.data.length
+                });
+            }
+            let ampData = utils.packAmpVals(timeVals, this.props.data, ampDataDSFactor, this.state.prevTimeIndex);
             this.setState({
                 ampData: ampData
             });
@@ -41,10 +53,9 @@ class HardwareStream extends React.Component {
             }
         }
         let spectroData = utils.getSpectrogramData(this.state.freqData, timeStep);
-        // console.log(spectroData);
         return (
             <div className='Hardware-Stream'>
-                {/* <LineGraph data={ampData}></LineGraph> */}
+                <LineGraph data={this.state.ampData}></LineGraph>
                 <div className='Freq-Graphs'>
                     <Spectrogram 
                             xvals={spectroData.xvals}

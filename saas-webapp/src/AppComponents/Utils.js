@@ -1,6 +1,17 @@
-function packAmpVals(timeVals, data) {
+function getNewTimeIndexCutoff(timeVals, prevCutoff, timeDisplayed) {
+    if (timeVals[timeVals.length-1] < timeDisplayed) {
+        return 0;
+    }
+    let i = prevCutoff;
+    while(timeVals[i] < timeVals[timeVals.length-1]-timeDisplayed) {
+        i+=1;
+    }
+    return i
+}
+
+function packAmpVals(timeVals, data, dsFactor, prevCutoff) {
     var ampVals = [];
-    for (let i = 0; i < data.length; i++) {
+    for (let i = prevCutoff; i < data.length; i += dsFactor) {
         ampVals.push({
             'time': timeVals[i],
             'amp': data[i]
@@ -84,6 +95,7 @@ function discreteFourierTransform(data) {
 }
 
 export {
+    getNewTimeIndexCutoff,
     packAmpVals,
     packFreqVals,
     getFreqDist,
