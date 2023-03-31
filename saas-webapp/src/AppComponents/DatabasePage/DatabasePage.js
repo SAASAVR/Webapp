@@ -54,8 +54,8 @@ class DatabasePage extends React.Component {
     this.state = {
       currentTab: states.AudioTabs.AudioDescription,
       audios: [],
-      
       currentAudioIndex: 0,
+      currentAudioData: {},
       socket: this.props.socket
     }
     this.handleHeaderClick = this.handleHeaderClick.bind(this);
@@ -66,18 +66,21 @@ class DatabasePage extends React.Component {
   initSocketHandling(socket) {
     socket.on("Receive-audios", (data) => {
       const map = new Map()
-      for (let i = 0; i < data.length; i++) {
-        let curAudio = data[i];
-        map.set(curAudio, false);
-      }
+      data.forEach((d) => map.set(d, false));
       const audioArray = Array.from(map, ([n, b]) => ({'name': n, 'isActive': b}))
+      this.setState({
+        audios: audioArray
+      });
       if (audioArray.length > 0) {
         audioArray[0]['isActive'] = true;
       }
+    });
+
+    socket.on("Receive-audio-data", (data) => {
       this.setState({
-        audios: audioArray
-      })
-    })
+        currentAudioData: data
+      });
+    });
   }
 
   handleHeaderClick(tab) {
@@ -107,6 +110,7 @@ class DatabasePage extends React.Component {
       audios: newAudios,
       currentAudioIndex: audioIndex
     });
+    this.state.socket.emit("Query-audio-id");
   }
 
   render() {
@@ -115,12 +119,14 @@ class DatabasePage extends React.Component {
     switch(this.state.currentTab) {
       case states.AudioTabs.AudioDescription:
         curPage = <AudioDescripitonPage
-                    audio={this.state.audios[this.state.currentAudioIndex]}>
+                    audio={this.state.audios[this.state.currentAudioIndex]}
+                    data={this.state.currentAudioData['AudioData']}>
                   </AudioDescripitonPage>
       break;
       case states.AudioTabs.MLDescription:
         curPage = <MLDescriptionPage
-                    audio={this.state.audios[this.state.currentAudioIndex]}>
+                    audio={this.state.audios[this.state.currentAudioIndex]}
+                    data={this.state.currentAudioData['MLData']}>
                   </MLDescriptionPage>
       break;
       default:

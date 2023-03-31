@@ -70,6 +70,12 @@ def getAudios():
     print("Received " + str(len(audios)) + " audios")
     emit("Receive-audios", audios, broadcast=True)
 
+@socketio.on("Query-audio-id")
+def getAudioData(id):
+    print("getting " + str(id) + " data")
+    doc = queryAudio(id)
+    emit("Receive-audio-data", {'AudioData': doc['AudioData'], 'MLData': doc['MLData']}, broadcast=True)
+
 
 import io
 import librosa
