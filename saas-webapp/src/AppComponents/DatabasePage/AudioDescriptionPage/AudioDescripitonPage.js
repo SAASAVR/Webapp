@@ -18,6 +18,7 @@ class AudioDescripitonPage extends React.Component {
             <div className="Audio-Div">
                 <h3>Audio Description {audioName}</h3>
                 <LineGraph data={this.state.downSampledData}></LineGraph>
+                <img src={this.props.spectrogram}/>
             </div>
         );
     }
