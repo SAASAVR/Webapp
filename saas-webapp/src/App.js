@@ -179,7 +179,8 @@ class App extends React.Component{
                   />
       break;
       case states.AppTabs.Database:
-        curPage = <DatabasePage/>
+        curPage = <DatabasePage
+                    socket={this.state.socket}/>
       break;
       default:
         curPage = <h1>PageNotFound</h1>
