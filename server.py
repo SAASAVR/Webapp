@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
 
@@ -6,6 +6,11 @@ app = Flask(__name__)
 app.config['SECRET KEY'] = 'secret!'
 CORS(app, resources={r"/*":{"origins":"*"}})
 socketio = SocketIO(app, cors_allowed_origins="*")
+
+@app.route('/')
+def index():
+    """Index route"""
+    return render_template("test.html")
 
 @socketio.on("connect")
 def clientConnected():
@@ -65,4 +70,5 @@ def SAASstopping():
     print("SAAS stopping recording")
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    print("Connecting...")
+    socketio.run(app, host="192.168.1.93", debug="True", port=5000)
