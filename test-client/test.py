@@ -13,7 +13,7 @@ def simDataGen():
     global is_still_recording
     cur_seek = 0
     while (is_still_recording):
-        # read 1kb at a time
+        # read 4kb at a time
         f.seek(cur_seek)
         data = f.read(1024)
         if not data:

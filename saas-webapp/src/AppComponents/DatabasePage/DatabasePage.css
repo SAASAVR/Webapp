@@ -4,6 +4,7 @@
     width: 100%;
     padding: 2em;
     padding-top: 3em;
+    height: 1100px;
 }
 
 .Left-Side {
@@ -59,6 +60,7 @@
     flex-direction: column;
     border-radius: 10px;
     background-color: #383b45;
+    height: 1100px;
 }
 
 .Database-Panel {

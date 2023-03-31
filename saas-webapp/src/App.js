@@ -175,10 +175,12 @@ class App extends React.Component{
                     recordHandler={() => this.toggleRecording()}
                     data={this.state.curData}
                     sampleRate={this.state.samplingRate}
+                    state={this.state.hardwareStatus}
                   />
       break;
       case states.AppTabs.Database:
-        curPage = <DatabasePage/>
+        curPage = <DatabasePage
+                    socket={this.state.socket}/>
       break;
       default:
         curPage = <h1>PageNotFound</h1>

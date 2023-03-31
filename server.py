@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
+import json
 
 app = Flask(__name__)
 app.config['SECRET KEY'] = 'secret!'
@@ -69,6 +70,81 @@ def UIRequestStop():
 def SAASstopping():
     print("SAAS stopping recording")
 
+@socketio.on("Query-audios")
+def getAudios():
+    audios = listAudio()
+    print("Received " + str(len(audios)) + " audios")
+    emit("Receive-audios", audios, broadcast=True)
+
+@socketio.on("Query-audio-id")
+def getAudioData(id):
+    print("getting " + str(id) + " data")
+    doc = queryAudio(id)
+    emit("Receive-audio-data", 
+        {
+            'Output': [int(i) for i in doc['output']],
+            'ArrayData': [float(i) for i in binaryData2numpy(doc['fileBytes'])], 
+            'AudioData': {
+                'sr': doc['AudioData']['sr'],
+                'size': doc['AudioData']['Size'],
+                'clipLength': doc['AudioData']['clipLength']
+            }, 
+            'MLData': doc['MLData'],
+            'Spectrogram': image2HtmlSrc(doc['AudioData']['MelSpectrumImgBytes'])
+        }, broadcast=True)
+
+
+import io
+import librosa
+import librosa.display
+import pymongo
+from PIL import Image
+import base64
+
+
+
+with open('mongodbKey', 'r') as file:
+    MONGO_URL = file.read()
+dbClient = pymongo.MongoClient(MONGO_URL)
+DATABASE_NAME = "mydatabase"
+COLLECTION_NAME = "AudiosTest"
+
+"""Convert the 'Bytefile to a numpy float"""
+def binaryData2numpy(input):
+    out, sr = librosa.load(io.BytesIO(input), sr=None)
+    return out
+"""This is the query audio when user selects one of the audio links"""
+def queryAudio(id):
+    mycol = dbClient[DATABASE_NAME][COLLECTION_NAME]
+    myquery = { "ID": id}
+    mydoc = mycol.find_one(myquery)
+    return mydoc
+"""you might need this if you would like to listen to it"""
+"""Takes in numpy float array of librosa, plays sound"""
+# def playNumpy(numpy_array):
+#     import sounddevice as sd
+#     sd.play(numpy_array, sr)
+#     sd.wait()
+
+
+
+
+def image2HtmlSrc(binaryBuffer):
+    img_str = base64.b64encode(binaryBuffer).decode('utf-8')
+    img_str = "data:image/png;base64, " + img_str
+    return img_str
+
+def listAudio():
+    mycol = dbClient[DATABASE_NAME][COLLECTION_NAME]
+    return mycol.distinct("ID")
+
+
 if __name__ == '__main__':
-    print("Connecting...")
-    socketio.run(app, host="192.168.1.93", debug="True", port=5000)
+    socketio.run(app, debug=True)
+    # ### queryTestAudio
+    """ID would be from a value in listAudio()"""
+    # doc = queryAudio(ID)
+    # print(doc['MLData'])
+    # audioNumpy = binaryData2numpy(doc['fileBytes'])
+    # Img = loadMelSpecBinary2Image(doc['AudioData']['MelSpectrumImgBytes'])
+    # Img.show()

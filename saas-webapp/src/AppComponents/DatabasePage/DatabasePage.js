@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import './DatabasePage.css'
 import '../../App.css'
+import * as utils from '../Utils.js';
 import * as states from './DatabaseStates.js';
 
 //// import { useState } from 'react';
@@ -53,11 +54,47 @@ class DatabasePage extends React.Component {
     super(props);
     this.state = {
       currentTab: states.AudioTabs.AudioDescription,
-      audios: getAudios(),
-      
-      currentAudioIndex: 0
+      audios: [],
+      currentAudioIndex: 0,
+      currentAudioData:
+        {
+          'Output': [],
+          'ArrayData': [], 
+          'AudioData': {
+              'sr': 0,
+              'size': 0,
+              'clipLength': 0
+          }, 
+          'MLData': {},
+          // 'Spectrogram': []
+      },
+      socket: this.props.socket
     }
     this.handleHeaderClick = this.handleHeaderClick.bind(this);
+    this.initSocketHandling(this.props.socket);
+    this.props.socket.emit("Query-audios");
+  }
+
+  initSocketHandling(socket) {
+    socket.on("Receive-audios", (data) => {
+      const map = new Map()
+      data.forEach((d) => map.set(d, false));
+      const audioArray = Array.from(map, ([n, b]) => ({'name': n, 'isActive': b}))
+      this.setState({
+        audios: audioArray
+      });
+      if (audioArray.length > 0) {
+        audioArray[0]['isActive'] = true;
+      }
+      this.state.socket.emit("Query-audio-id", audioArray[0]['name']);
+    });
+
+    socket.on("Receive-audio-data", (data) => {
+      this.setState({
+        currentAudioData: data
+      });
+      this.forceUpdate();
+    });
   }
 
   handleHeaderClick(tab) {
@@ -87,20 +124,32 @@ class DatabasePage extends React.Component {
       audios: newAudios,
       currentAudioIndex: audioIndex
     });
+    this.state.socket.emit("Query-audio-id", this.state.audios[audioIndex]['name']);
   }
 
   render() {
     let curPage;
     // list of tabs
+    const arrayDataDSFactor = 16;
+    const timeVals = new Array(this.state.currentAudioData['ArrayData'].length)
+        .fill(0)
+        .map((_, i) => 
+            {return i*(1/this.state.currentAudioData['AudioData']['sr'])});
+            const downsampled = utils.packAmpVals(timeVals, this.state.currentAudioData['ArrayData'], arrayDataDSFactor, 0);
     switch(this.state.currentTab) {
       case states.AudioTabs.AudioDescription:
+        
         curPage = <AudioDescripitonPage
-                    audio={this.state.audios[this.state.currentAudioIndex]}>
+                    audio={this.state.audios[this.state.currentAudioIndex]}
+                    downsampledVals = {downsampled}
+                    spectrogram = {this.state.currentAudioData['Spectrogram']}>
                   </AudioDescripitonPage>
       break;
       case states.AudioTabs.MLDescription:
+        const mlOutputs = utils.extractMLAmpVals(downsampled, this.state.currentAudioData['Output'],this.state.currentAudioData['AudioData']['clipLength']);
         curPage = <MLDescriptionPage
-                    audio={this.state.audios[this.state.currentAudioIndex]}>
+                    audio={this.state.audios[this.state.currentAudioIndex]}
+                    mlData={mlOutputs}>
                   </MLDescriptionPage>
       break;
       default:
@@ -128,42 +177,6 @@ class DatabasePage extends React.Component {
         </div>
     );
   }
-}
-
-// We would grab audios here from the data
-function getAudios() {
-  // list of audio files, include isActive
-  const audios = [
-    {
-      name: 'Audio 1',
-      isActive: true,
-    },
-    {
-      name: 'Audio 2',
-      isActive: false,
-    },
-    {
-      name: 'Audio 3',
-      isActive: false,
-    },
-    {
-      name: 'Audio 4',
-      isActive: false,
-    },
-    {
-      name: 'Audio 5',
-      isActive: false,
-    },
-    {
-      name: 'Audio 6',
-      isActive: false,
-    },
-    {
-      name: 'Audio 7',
-      isActive: false,
-    },
-  ];
-  return audios;
 }
 
 export default DatabasePage
