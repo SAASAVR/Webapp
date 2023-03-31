@@ -66,8 +66,9 @@ class DatabasePage extends React.Component {
   initSocketHandling(socket) {
     socket.on("Receive-audios", (data) => {
       const map = new Map()
-      for (const audio in data) {
-        map.set(audio, false);
+      for (let i = 0; i < data.length; i++) {
+        let curAudio = data[i];
+        map.set(curAudio, false);
       }
       const audioArray = Array.from(map, ([n, b]) => ({'name': n, 'isActive': b}))
       if (audioArray.length > 0) {
