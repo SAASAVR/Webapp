@@ -61,7 +61,7 @@ class HardwareStream extends React.Component {
                             xvals={spectroData.xvals}
                             yvals={spectroData.yvals}
                             data={spectroData.data}></Spectrogram>
-                    {/* <FreqDist data={utils.getFreqDist(freqData)}></FreqDist>  */}
+                    <FreqDist className='Freq-Dist' data={utils.getFreqDist(this.state.freqData)}></FreqDist> 
                 </div>
             </div>
         )

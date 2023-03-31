@@ -7,11 +7,10 @@ class Spectrogram extends React.Component {
 
     render() {
         return (
-            <div style={{width: '45%', marginLeft: '1em', padding: '0em', height: '100%'}}>
+            <div style={{width: '50%', marginLeft: '1em', padding: '0em', height: '100%'}}>
                 <HeatMapGrid
                     data={this.props.data}
-                    yLabels={this.props.yval}
-                    cellHeight='3px'
+                    cellHeight='5.5px'
                     xLabelsPos="bottom"
                     xLabelWidth={0}
                     cellStyle={(_x, _y, ratio) => ({

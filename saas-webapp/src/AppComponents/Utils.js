@@ -35,13 +35,17 @@ function packFreqVals(newFreqData) {
 }
 
 function getFreqDist(data) {
+    if (data.length === 0) {
+        return [];
+    }
     const map = new Map();
-    const maxFreq = 22050;
-    for (const obj of data) {
+    for (const time of data) {
         // Would have to get the frequency distributions here
-        let freq = obj['freq'];
-        let initSum = map.get(freq) || 0;
-        map.set(freq, initSum+obj['val']);
+        for (const freqVal of time) {
+            let freq = freqVal['freq'];
+            let initSum = map.get(freq) || 0;
+            map.set(freq, initSum+freqVal['val']);
+        }
     }
     return Array.from(map, ([f, v]) => ({'freq': f, 'val': v}));
 }
