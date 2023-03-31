@@ -5,11 +5,25 @@ import { LineChart, ResponsiveContainer, XAxis, YAxis, Tooltip, Brush, Line } fr
 import './LineGraph.css'
 
 class LineGraph extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            data: []
+        }
+    }
 
     render() {
+        if ((this.state.data.length === 0 && this.props.data.length > 0) || 
+            (this.props.data.length > 0 
+                && this.props.data[this.props.data.length-1]['time'] > this.state.data[this.state.data.length-1]['time'])) {
+            this.setState({
+                data: this.props.data
+            });
+        }        
+
         return (
             <ResponsiveContainer height={400}>
-                <LineChart data={this.props.data}
+                <LineChart data={this.state.data}
                     margin={{ top: 5, right: 50, bottom: 5 }}
                     style={{backgroundColor:""}}>
                     <XAxis dataKey="time" stroke='#919191'/>
