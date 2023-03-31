@@ -64,5 +64,57 @@ def UIRequestStop():
 def SAASstopping():
     print("SAAS stopping recording")
 
+
+import io
+import librosa
+import librosa.display
+import pymongo
+from PIL import Image
+
+
+
+
+with open('mongodbKey', 'r') as file:
+    MONGO_URL = file.read()
+dbClient = pymongo.MongoClient(MONGO_URL)
+DATABASE_NAME = "mydatabase"
+COLLECTION_NAME = "AudiosTest"
+
+"""Convert the 'Bytefile to a numpy float"""
+def binaryData2numpy(input):
+    out, sr = librosa.load(io.BytesIO(input), sr=None)
+    return out
+"""This is the query audio when user selects one of the audio links"""
+def queryAudio(id):
+    mycol = dbClient[DATABASE_NAME][COLLECTION_NAME]
+    myquery = { "ID": id}
+    mydoc = mycol.find_one(myquery)
+    return mydoc
+"""you might need this if you would like to listen to it"""
+"""Takes in numpy float array of librosa, plays sound"""
+# def playNumpy(numpy_array):
+#     import sounddevice as sd
+#     sd.play(numpy_array, sr)
+#     sd.wait()
+
+
+
+
+def loadMelSpecBinary2Image(binaryImg):
+    image = Image.open(io.BytesIO(binaryImg))
+    return image
+
+def listAudio():
+    mycol = dbClient[DATABASE_NAME][COLLECTION_NAME]
+    return mycol.distinct("ID")
+
+
 if __name__ == '__main__':
     socketio.run(app, debug=True)
+    # ### queryTestAudio
+    """ID would be from a value in listAudio()"""
+    # doc = queryAudio(ID)
+    # print(doc['MLData'])
+    # audioNumpy = binaryData2numpy(doc['fileBytes'])
+    # Img = loadMelSpecBinary2Image(doc['AudioData']['MelSpectrumImgBytes'])
+    # Img.show()
