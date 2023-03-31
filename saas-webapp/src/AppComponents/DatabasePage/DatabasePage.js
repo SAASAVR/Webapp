@@ -53,11 +53,30 @@ class DatabasePage extends React.Component {
     super(props);
     this.state = {
       currentTab: states.AudioTabs.AudioDescription,
-      audios: getAudios(),
+      audios: [],
       
-      currentAudioIndex: 0
+      currentAudioIndex: 0,
+      socket: this.props.socket
     }
     this.handleHeaderClick = this.handleHeaderClick.bind(this);
+    this.initSocketHandling(this.props.socket);
+    this.props.socket.emit("Query-audios");
+  }
+
+  initSocketHandling(socket) {
+    socket.on("Receive-audios", (data) => {
+      const map = new Map()
+      for (const audio in data) {
+        map.set(audio, false);
+      }
+      const audioArray = Array.from(map, ([n, b]) => ({'name': n, 'isActive': b}))
+      if (audioArray.length > 0) {
+        audioArray[0]['isActive'] = true;
+      }
+      this.setState({
+        audios: audioArray
+      })
+    })
   }
 
   handleHeaderClick(tab) {
@@ -128,42 +147,6 @@ class DatabasePage extends React.Component {
         </div>
     );
   }
-}
-
-// We would grab audios here from the data
-function getAudios() {
-  // list of audio files, include isActive
-  const audios = [
-    {
-      name: 'Audio 1',
-      isActive: true,
-    },
-    {
-      name: 'Audio 2',
-      isActive: false,
-    },
-    {
-      name: 'Audio 3',
-      isActive: false,
-    },
-    {
-      name: 'Audio 4',
-      isActive: false,
-    },
-    {
-      name: 'Audio 5',
-      isActive: false,
-    },
-    {
-      name: 'Audio 6',
-      isActive: false,
-    },
-    {
-      name: 'Audio 7',
-      isActive: false,
-    },
-  ];
-  return audios;
 }
 
 export default DatabasePage

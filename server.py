@@ -64,6 +64,12 @@ def UIRequestStop():
 def SAASstopping():
     print("SAAS stopping recording")
 
+@socketio.on("Query-audios")
+def getAudios():
+    audios = listAudio()
+    print("Received " + str(len(audios)) + " audios")
+    emit("Receive-audios", audios, broadcast=True)
+
 
 import io
 import librosa
