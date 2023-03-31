@@ -141,7 +141,8 @@ class DatabasePage extends React.Component {
         
         curPage = <AudioDescripitonPage
                     audio={this.state.audios[this.state.currentAudioIndex]}
-                    downsampledVals = {downsampled}>
+                    downsampledVals = {downsampled}
+                    spectrogram = {this.state.currentAudioData['Spectrogram']}>
                   </AudioDescripitonPage>
       break;
       case states.AudioTabs.MLDescription:

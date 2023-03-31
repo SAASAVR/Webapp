@@ -85,7 +85,7 @@ def getAudioData(id):
                 'clipLength': doc['AudioData']['clipLength']
             }, 
             'MLData': doc['MLData'],
-            # 'Spectrogram': loadMelSpecBinary2Image(doc['AudioData']['MelSpectrumImgBytes'])
+            'Spectrogram': image2HtmlSrc(doc['AudioData']['MelSpectrumImgBytes'])
         }, broadcast=True)
 
 
@@ -94,7 +94,7 @@ import librosa
 import librosa.display
 import pymongo
 from PIL import Image
-
+import base64
 
 
 
@@ -124,9 +124,10 @@ def queryAudio(id):
 
 
 
-def loadMelSpecBinary2Image(binaryImg):
-    image = Image.open(io.BytesIO(binaryImg))
-    return image
+def image2HtmlSrc(binaryBuffer):
+    img_str = base64.b64encode(binaryBuffer).decode('utf-8')
+    img_str = "data:image/png;base64, " + img_str
+    return img_str
 
 def listAudio():
     mycol = dbClient[DATABASE_NAME][COLLECTION_NAME]
