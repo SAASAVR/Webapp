@@ -27,6 +27,7 @@ chrome-user-data
 test-client/test-env
 .venv
 venv
+venv_windows
 env
 
 
