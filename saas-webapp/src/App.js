@@ -175,6 +175,7 @@ class App extends React.Component{
                     recordHandler={() => this.toggleRecording()}
                     data={this.state.curData}
                     sampleRate={this.state.samplingRate}
+                    state={this.state.hardwareStatus}
                   />
       break;
       case states.AppTabs.Database:
