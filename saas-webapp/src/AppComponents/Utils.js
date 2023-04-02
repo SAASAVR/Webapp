@@ -103,10 +103,19 @@ function discreteFourierTransform(data) {
 }
 
 function extractMLAmpVals(packedData, output, clipSize) {
+    if (output.length == 0) {
+        return [];
+    }
     let data = [];
-    packedData.forEach((val) => {
-            let outputIndex = Math.floor(val['time']/clipSize);
-            let curOutput = output[outputIndex];
+    for (let i = 0; (i+1)*clipSize < packedData.length; i += 1) {
+        let end = (i+1)*clipSize; 
+        if (end >= packedData.length) {
+            end = packedData.length-1
+        }
+        const curSlice = packedData.slice(i*clipSize, end);
+        let curOutput = output[i];
+        console.log(curSlice);
+        curSlice.forEach((val) => {
             if (curOutput === 0) {
                 data.push({
                     'time': val['time'],
@@ -120,7 +129,9 @@ function extractMLAmpVals(packedData, output, clipSize) {
                     'detectedAmp': val['amp']
                 });
             }
-    });
+        })
+
+    }
     return data;
 }
 

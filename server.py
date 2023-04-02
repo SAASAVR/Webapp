@@ -80,10 +80,13 @@ def getAudios():
 def getAudioData(id):
     print("getting " + str(id) + " data")
     doc = queryAudio(id)
+    output = []
+    if ('output' in doc['MLData']):
+        output = [int(i) for i in doc['MLData']['output']]
     emit("Receive-audio-data", 
         {
-            'Output': [int(i) for i in doc['output']],
-            'ArrayData': [float(i) for i in binaryData2numpy(doc['fileBytes'])], 
+            'Output': output,
+            'ArrayData': [float(i) for i in binaryData2numpy(doc['fileBytes'], doc['AudioData']['sr'])], 
             'AudioData': {
                 'sr': doc['AudioData']['sr'],
                 'size': doc['AudioData']['Size'],
@@ -110,8 +113,8 @@ DATABASE_NAME = "mydatabase"
 COLLECTION_NAME = "AudiosTest"
 
 """Convert the 'Bytefile to a numpy float"""
-def binaryData2numpy(input):
-    out, sr = librosa.load(io.BytesIO(input), sr=None)
+def binaryData2numpy(input, dataSR):
+    out, sr = librosa.load(io.BytesIO(input), sr=dataSR)
     return out
 """This is the query audio when user selects one of the audio links"""
 def queryAudio(id):

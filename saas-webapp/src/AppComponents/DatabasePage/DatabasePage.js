@@ -130,7 +130,8 @@ class DatabasePage extends React.Component {
   render() {
     let curPage;
     // list of tabs
-    const arrayDataDSFactor = 16;
+    const arrayDataDSFactor = 256;
+    const downSampledSize = Math.floor(this.state.currentAudioData['AudioData']['size']/arrayDataDSFactor);
     const timeVals = new Array(this.state.currentAudioData['ArrayData'].length)
         .fill(0)
         .map((_, i) => 
@@ -146,7 +147,7 @@ class DatabasePage extends React.Component {
                   </AudioDescripitonPage>
       break;
       case states.AudioTabs.MLDescription:
-        const mlOutputs = utils.extractMLAmpVals(downsampled, this.state.currentAudioData['Output'],this.state.currentAudioData['AudioData']['clipLength']);
+        const mlOutputs = utils.extractMLAmpVals(downsampled, this.state.currentAudioData['Output'], downSampledSize);
         curPage = <MLDescriptionPage
                     audio={this.state.audios[this.state.currentAudioIndex]}
                     mlData={mlOutputs}>
