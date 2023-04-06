@@ -26,6 +26,11 @@ chrome-user-data
 
 env/
 test-client/test-env
+.venv
+venv
+venv_windows
+env
+
 
 packages/react-devtools-core/dist
 packages/react-devtools-extensions/chrome/build

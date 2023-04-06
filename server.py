@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
 import json
@@ -7,6 +7,11 @@ app = Flask(__name__)
 app.config['SECRET KEY'] = 'secret!'
 CORS(app, resources={r"/*":{"origins":"*"}})
 socketio = SocketIO(app, cors_allowed_origins="*")
+
+@app.route('/')
+def index():
+    """Index route"""
+    return render_template("test.html")
 
 @socketio.on("connect")
 def clientConnected():
@@ -19,7 +24,7 @@ def UIConnected():
     """event listener for when the UI connects"""
     print(request.sid)
     print("UI has connected")
-    emit("UI-connect", {"data":f"id: {request.sid} is connected"})
+    emit("UI-connect", {"data":f"id: {request.sid} is connected"}, broadcast=True)
 
 @socketio.on("SAAS-connect")
 def SAASconnected():
@@ -138,7 +143,7 @@ def listAudio():
 
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app, '192.168.1.93', debug=True)
     # ### queryTestAudio
     """ID would be from a value in listAudio()"""
     # doc = queryAudio(ID)

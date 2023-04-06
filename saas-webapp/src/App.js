@@ -14,7 +14,7 @@ class App extends React.Component{
   constructor(props) {
     super(props);
 
-    const servSocket = io("localhost:5000/", {
+    const servSocket = io("192.168.1.93:5000/", {
       transports: ["websocket"],
       cors: {
         origin: "http://localhost:3000/",

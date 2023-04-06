@@ -47,7 +47,7 @@ def SAASStopRecord():
     sio.emit("SAAS-stopping-recording")
 
 if __name__ == '__main__':
-    sio.connect('http://localhost:5000', wait_timeout = 10)
+    sio.connect('http://192.168.1.93:5000', wait_timeout = 10)
 
     sio.emit("SAAS-connect")
     time.sleep(1)
