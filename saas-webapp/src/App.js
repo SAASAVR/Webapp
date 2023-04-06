@@ -73,6 +73,13 @@ class App extends React.Component{
       socket.emit("UI-ready-for-data");
     });
 
+    socket.on("SAAS-file-saved", () => {
+      console.log("Audio saved to database")
+      this.setState({
+        hardwareStatus: HWStates.HardwareStatus.Connected,
+      })
+    });
+
     socket.on("SAAS-send-data", (data) => {
       console.log("Received data from SAAS");
       let newData = this.state.curData.concat(data["vals"]);
