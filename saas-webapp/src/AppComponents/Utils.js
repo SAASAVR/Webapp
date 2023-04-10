@@ -114,7 +114,6 @@ function extractMLAmpVals(packedData, output, clipSize) {
         }
         const curSlice = packedData.slice(i*clipSize, end);
         let curOutput = output[i];
-        console.log(curSlice);
         curSlice.forEach((val) => {
             if (curOutput === 0) {
                 data.push({

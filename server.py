@@ -148,7 +148,7 @@ def listAudio():
 
 
 if __name__ == '__main__':
-    socketio.run(app, '192.168.1.93', debug=True)
+    socketio.run(app, debug=True)
     # ### queryTestAudio
     """ID would be from a value in listAudio()"""
     # doc = queryAudio(ID)

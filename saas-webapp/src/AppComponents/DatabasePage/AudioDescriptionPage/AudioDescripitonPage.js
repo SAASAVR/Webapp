@@ -7,9 +7,6 @@ import LineGraph from "../../Graphs/LineGraph";
 class AudioDescripitonPage extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            downSampledData: this.props.downsampledVals
-        }
     }
 
     render() {
@@ -17,7 +14,7 @@ class AudioDescripitonPage extends React.Component {
         return(
             <div className="Audio-Div">
                 <h3>Audio Description {audioName}</h3>
-                <LineGraph data={this.state.downSampledData}></LineGraph>
+                <LineGraph data={this.props.downSampledVals}></LineGraph>
                 <img src={this.props.spectrogram}/>
             </div>
         );

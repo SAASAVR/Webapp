@@ -4,6 +4,21 @@ const AudioTabs = {
     AudioDescription: Symbol("AudioDescripiton"),
     MLDescription: Symbol("MLDescription"),
 };
+
+const EmptyData = {
+    'Output': [],
+    'ArrayData': [], 
+    'AudioData': {
+        'sr': 0,
+        'size': 0,
+        'clipLength': 0
+    }, 
+    'MLData': {},
+    'Spectrogram': "",
+    'DownSampledSize': 0,
+    'DownSampledData': []
+};
+
 function getAudioTabsString(tab) {
     let name;
     switch (tab) {
@@ -34,6 +49,7 @@ function getAudioTabsIcon(tab) {
 }
 export{
     AudioTabs,
+    EmptyData,
     getAudioTabsString,
     getAudioTabsIcon,
 }
