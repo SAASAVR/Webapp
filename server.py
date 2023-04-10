@@ -70,6 +70,11 @@ def UIRequestStop():
 def SAASstopping():
     print("SAAS stopping recording")
 
+@socketio.on("SAAS-file-saved")
+def SAASfileSaved():
+    print("SAAS file saved")
+    emit("SAAS-file-saved", broadcast=True)
+
 @socketio.on("Query-audios")
 def getAudios():
     audios = listAudio()
