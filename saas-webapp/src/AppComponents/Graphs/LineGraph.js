@@ -10,6 +10,9 @@ class LineGraph extends React.Component {
         this.state = {
             data: []
         }
+        this.scale = {
+            scale: [-30, 30]
+        }
     }
 
     render() {
@@ -27,7 +30,7 @@ class LineGraph extends React.Component {
                     margin={{ top: 5, right: 50, bottom: 5 }}
                     style={{backgroundColor:""}}>
                     <XAxis dataKey="time" stroke='#919191'/>
-                    <YAxis stroke='#919191'/>
+                    <YAxis domain={this.scale["scale"]} stroke='#919191'/>
                     <Tooltip 
                         wrapperStyle={{color: '#4e4d57' }}
                         contentStyle={{backgroundColor: '#bcbcbc'}}
