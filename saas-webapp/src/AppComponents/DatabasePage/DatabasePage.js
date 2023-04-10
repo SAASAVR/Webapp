@@ -56,19 +56,8 @@ class DatabasePage extends React.Component {
       currentTab: states.AudioTabs.AudioDescription,
       audios: [],
       currentAudioIndex: 0,
-      currentAudioData:
-        {
-          'Output': [],
-          'ArrayData': [], 
-          'AudioData': {
-              'sr': 0,
-              'size': 0,
-              'clipLength': 0
-          }, 
-          'MLData': {},
-          // 'Spectrogram': []
-      },
-      socket: this.props.socket
+      currentAudioData: states.EmptyData,
+      socket: this.props.socket,
     }
     this.handleHeaderClick = this.handleHeaderClick.bind(this);
     this.initSocketHandling(this.props.socket);
@@ -90,10 +79,24 @@ class DatabasePage extends React.Component {
     });
 
     socket.on("Receive-audio-data", (data) => {
+      let retrievedData = data;
+      const arrayDataDSFactor = 256;
+      const downSampledSize = Math.floor(data['AudioData']['size']/arrayDataDSFactor);
+      const timeVals = new Array(data['ArrayData'].length)
+          .fill(0)
+          .map((_, i) => 
+              {return i*(1/data['AudioData']['sr'])});
+      const downsampled = utils.packAmpVals(timeVals, data['ArrayData'], arrayDataDSFactor, 0);
+      const mlOutputs = utils.extractMLAmpVals(
+        downsampled,
+        data['Output'],
+        downSampledSize);
+      retrievedData['DownSampledData'] = downsampled;
+      retrievedData['DownSampledSize'] = downSampledSize;
+      retrievedData['MLData']['Outputs'] = mlOutputs;
       this.setState({
         currentAudioData: data
       });
-      this.forceUpdate();
     });
   }
 
@@ -101,6 +104,12 @@ class DatabasePage extends React.Component {
     this.setState({
       currentTab: tab
     });
+  }
+
+  requestMLProcessing() {
+    let audioID = this.state.audios[this.state.currentAudioIndex]['name'];
+    // (some socketio stuff to process it)
+    console.log(audioID);
   }
 
   renderButton(tab) {
@@ -122,7 +131,9 @@ class DatabasePage extends React.Component {
     newAudios[audioIndex].isActive = true;
     this.setState({
       audios: newAudios,
-      currentAudioIndex: audioIndex
+      currentAudioIndex: audioIndex,
+      currentAudioData: states.EmptyData,
+      currentTab: states.AudioTabs.AudioDescription
     });
     this.state.socket.emit("Query-audio-id", this.state.audios[audioIndex]['name']);
   }
@@ -130,27 +141,19 @@ class DatabasePage extends React.Component {
   render() {
     let curPage;
     // list of tabs
-    const arrayDataDSFactor = 256;
-    const downSampledSize = Math.floor(this.state.currentAudioData['AudioData']['size']/arrayDataDSFactor);
-    const timeVals = new Array(this.state.currentAudioData['ArrayData'].length)
-        .fill(0)
-        .map((_, i) => 
-            {return i*(1/this.state.currentAudioData['AudioData']['sr'])});
-            const downsampled = utils.packAmpVals(timeVals, this.state.currentAudioData['ArrayData'], arrayDataDSFactor, 0);
     switch(this.state.currentTab) {
       case states.AudioTabs.AudioDescription:
-        
         curPage = <AudioDescripitonPage
                     audio={this.state.audios[this.state.currentAudioIndex]}
-                    downsampledVals = {downsampled}
+                    downSampledVals = {this.state.currentAudioData['DownSampledData']}
                     spectrogram = {this.state.currentAudioData['Spectrogram']}>
                   </AudioDescripitonPage>
       break;
       case states.AudioTabs.MLDescription:
-        const mlOutputs = utils.extractMLAmpVals(downsampled, this.state.currentAudioData['Output'], downSampledSize);
         curPage = <MLDescriptionPage
                     audio={this.state.audios[this.state.currentAudioIndex]}
-                    mlData={mlOutputs}>
+                    mlData={this.state.currentAudioData['MLData']['Outputs']}
+                    mlClickHandler={() => this.requestMLProcessing()}>
                   </MLDescriptionPage>
       break;
       default:
