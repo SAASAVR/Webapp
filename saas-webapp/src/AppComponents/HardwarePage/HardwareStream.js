@@ -55,13 +55,13 @@ class HardwareStream extends React.Component {
         let spectroData = utils.getSpectrogramData(this.state.freqData, timeStep);
         return (
             <div className='Hardware-Stream'>
-                <LineGraph data={this.state.ampData}></LineGraph>
+                <LineGraph data={this.state.ampData}>Audio Stream</LineGraph>
                 <div className='Freq-Graphs'>
                     <Spectrogram 
                             xvals={spectroData.xvals}
                             yvals={spectroData.yvals}
-                            data={spectroData.data}></Spectrogram>
-                    <FreqDist className='Freq-Dist' data={utils.getFreqDist(this.state.freqData)}></FreqDist> 
+                            data={spectroData.data}>Spectrogram</Spectrogram>
+                    <FreqDist className='Freq-Dist' data={utils.getFreqDist(this.state.freqData)}>Frequency Distribution</FreqDist> 
                 </div>
             </div>
         )

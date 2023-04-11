@@ -33,6 +33,13 @@ def SAASconnected():
     print("SAAS has connected")
     emit("SAAS-connect", broadcast=True)
 
+@socketio.on("SAAS-disconnect")
+def SAASdisconnected():
+    """event listener for when the SAAS disconnects"""
+    print(request.sid)
+    print("SAAS has disconnected")
+    emit("SAAS-disconnect", broadcast=True)
+
 @socketio.on("SAAS-ready")
 def SAASready():
     """event listener for when the SAAS is ready to record"""
@@ -59,6 +66,7 @@ def UIIngesting():
 @socketio.on("SAAS-send-data")
 def SAASsending(data):
     print("SAAS sending data with  " + str(len(data["vals"])) + " elements")
+    print("Sent list: " + str(data["vals"]))
     emit("SAAS-send-data", data, broadcast=True)
 
 @socketio.on("UI-stop-request")
@@ -148,7 +156,7 @@ def listAudio():
 
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio.run(app, '192.168.1.93', port=5000, debug=True)
     # ### queryTestAudio
     """ID would be from a value in listAudio()"""
     # doc = queryAudio(ID)

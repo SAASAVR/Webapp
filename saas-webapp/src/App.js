@@ -14,7 +14,7 @@ class App extends React.Component{
   constructor(props) {
     super(props);
 
-    const servSocket = io("localhost:5000/", {
+    const servSocket = io("192.168.1.93:5000/", {
       transports: ["websocket"],
       cors: {
         origin: "http://localhost:3000/",
@@ -59,11 +59,19 @@ class App extends React.Component{
       });
     });
 
+    socket.on("SAAS-disconnect", () => {
+      console.log("SAAS disconnected");
+      this.setState({
+        hardwareStatus: HWStates.HardwareStatus.NotConnected,
+      });
+    });
+
     socket.on("SAAS-ready", () => {
       this.setState({
         hardwareStatus: HWStates.HardwareStatus.Connected,
       })
     });
+
 
     socket.on("SAAS-recording", (data) => {
       console.log("Received sample rate: " + data.samplerate);

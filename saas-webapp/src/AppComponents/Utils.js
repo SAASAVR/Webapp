@@ -42,16 +42,22 @@ function getFreqDist(data) {
     if (data.length === 0) {
         return [];
     }
+    console.log("Compiling map...");
     const map = new Map();
     for (const time of data) {
-        // Would have to get the frequency distributions here
+        // Would have to get the frequency distributions here'
+        console.log("")
         for (const freqVal of time) {
             let freq = freqVal['freq'];
             let initSum = map.get(freq) || 0;
             map.set(freq, initSum+freqVal['val']);
         }
     }
-    return Array.from(map, ([f, v]) => ({'freq': f, 'val': v}));
+    console.log("Compiling returnVal...");
+    var returnVal = Array.from(map, ([f, v]) => ({'freq': f, 'val': v}));
+    console.log("returnVal: ");
+    console.log(returnVal);
+    return returnVal;
 }
 
 function getSpectrogramData(data, timestep) {
