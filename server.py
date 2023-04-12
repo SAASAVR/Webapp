@@ -1,7 +1,10 @@
 from flask import Flask, request, jsonify, render_template
 from flask_socketio import SocketIO, emit
 from flask_cors import CORS
+import requests
 import json
+
+ml_ip = "http://192.168.137.36:5000/"
 
 app = Flask(__name__)
 app.config['SECRET KEY'] = 'secret!'
@@ -99,7 +102,7 @@ def getAudioData(id):
     emit("Receive-audio-data", 
         {
             'Output': output,
-            'ArrayData': [float(i) for i in binaryData2numpy(doc['fileBytes'], doc['AudioData']['sr'])], 
+            'ArrayData': [float(i) for i in binaryData2numpy(doc['fileBytes'], None)], 
             'AudioData': {
                 'sr': doc['AudioData']['sr'],
                 'size': doc['AudioData']['Size'],
@@ -108,6 +111,15 @@ def getAudioData(id):
             'MLData': doc['MLData'],
             'Spectrogram': image2HtmlSrc(doc['AudioData']['MelSpectrumImgBytes'])
         }, broadcast=True)
+    
+@socketio.on("Request-ml")
+def requestMLProcessing(audioID):
+    print("requesting ml processing on " + audioID + " at " + ml_ip)
+    outJson = {'ID': audioID}
+    response = requests.post(ml_ip, json.dumps(outJson))
+    print(response.json()['success'])
+    if (response.json()['success']):
+        emit("ML-finish", outJson)
 
 
 import io
@@ -156,7 +168,7 @@ def listAudio():
 
 
 if __name__ == '__main__':
-    socketio.run(app, '192.168.1.93', port=5000, debug=True)
+    socketio.run(app, port=5000, debug=True)
     # ### queryTestAudio
     """ID would be from a value in listAudio()"""
     # doc = queryAudio(ID)

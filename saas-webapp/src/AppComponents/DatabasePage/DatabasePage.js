@@ -72,10 +72,6 @@ class DatabasePage extends React.Component {
       this.setState({
         audios: audioArray
       });
-      if (audioArray.length > 0) {
-        audioArray[0]['isActive'] = true;
-      }
-      this.state.socket.emit("Query-audio-id", audioArray[0]['name']);
     });
 
     socket.on("Receive-audio-data", (data) => {
@@ -95,8 +91,12 @@ class DatabasePage extends React.Component {
       retrievedData['DownSampledSize'] = downSampledSize;
       retrievedData['MLData']['Outputs'] = mlOutputs;
       this.setState({
-        currentAudioData: data
+        currentAudioData: retrievedData
       });
+    });
+
+    socket.on("ML-finish", (data) => {
+      this.state.socket.emit("Query-audio-id", data["ID"]);
     });
   }
 
@@ -109,7 +109,7 @@ class DatabasePage extends React.Component {
   requestMLProcessing() {
     let audioID = this.state.audios[this.state.currentAudioIndex]['name'];
     // (some socketio stuff to process it)
-    console.log(audioID);
+    this.state.socket.emit("Request-ml", audioID);
   }
 
   renderButton(tab) {
