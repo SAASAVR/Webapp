@@ -7,26 +7,16 @@ import './LineGraph.css'
 class LineGraph extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            data: []
-        }
         this.scale = {
             scale: [-60, 60]
         }
     }
 
-    render() {
-        if ((this.state.data.length === 0 && this.props.data.length > 0) || 
-            (this.props.data.length > 0 
-                && this.props.data[this.props.data.length-1]['time'] > this.state.data[this.state.data.length-1]['time'])) {
-            this.setState({
-                data: this.props.data
-            });
-        }        
+    render() {       
 
         return (
             <ResponsiveContainer height={400}>
-                <LineChart data={this.state.data}
+                <LineChart data={this.props.data}
                     margin={{ top: 5, right: 50, bottom: 5 }}
                     style={{backgroundColor:""}}>
                     <XAxis tickFormatter={(value) => value.toFixed(2)} dataKey="time" stroke='#919191'/>
