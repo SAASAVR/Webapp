@@ -8,7 +8,7 @@ class LineGraph extends React.Component {
     constructor(props) {
         super(props);
         this.scale = {
-            scale: [-60, 60]
+            scale: [-1, 1]
         }
     }
 

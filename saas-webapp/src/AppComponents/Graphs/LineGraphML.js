@@ -35,6 +35,7 @@ class LineGraphML extends React.Component {
                     <Line type="monotone" dataKey="undetectedAmp" stroke="#8884d8" dot={false}/>
                     <Line type="monotone" dataKey="detectedAmp" stroke="#00b415" dot={false}/>
                 </LineChart>
+                <p># Calls: {this.props.calls}</p>
             </ResponsiveContainer>
         )
     }

@@ -153,6 +153,7 @@ class DatabasePage extends React.Component {
         curPage = <MLDescriptionPage
                     audio={this.state.audios[this.state.currentAudioIndex]}
                     mlData={this.state.currentAudioData['MLData']['Outputs']}
+                    calls={this.state.currentAudioData['MLData']['Calls']}
                     mlClickHandler={() => this.requestMLProcessing()}>
                   </MLDescriptionPage>
       break;

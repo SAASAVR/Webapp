@@ -14,7 +14,8 @@ const EmptyData = {
         'clipLength': 0
     }, 
     'MLData': {
-        'Outputs': []
+        'Outputs': [],
+        'Calls': 0
     },
     'Spectrogram': "",
     'DownSampledSize': 0,

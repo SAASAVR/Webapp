@@ -4,7 +4,7 @@ from flask_cors import CORS
 import requests
 import json
 
-ml_ip = "http://192.168.137.36:5000/"
+ml_ip = "http://192.168.186.173:5000/"
 
 app = Flask(__name__)
 app.config['SECRET KEY'] = 'secret!'

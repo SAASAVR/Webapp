@@ -14,7 +14,7 @@ class MLDescriptionPage extends React.Component {
         let audioName = `${this.props.audio == null ? 'none' : this.props.audio.name}`;
         let userView = this.props.mlData.length === 0 ?
             <button className="ML-Process-Button" onClick={this.props.mlClickHandler}>process</button> :
-            <LineGraphML data={this.props.mlData}></LineGraphML>;
+            <LineGraphML data={this.props.mlData} calls={this.props.calls}></LineGraphML>;
         return(
             <div className="ML-Div">
                 <h3>MLDescription {audioName}</h3>
